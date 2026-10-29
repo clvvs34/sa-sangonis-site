@@ -193,7 +193,7 @@ jobs:
           )"
           lftp_script="$(printf '%s\n' "${lftp_script}" | sed 's/^[[:space:]]*//')"
           set +e
-          timeout --kill-after=15s 180s lftp -c "${lftp_script}" 2>&1 | redact_stream
+          timeout --kill-after=10s 70s lftp -c "${lftp_script}" 2>&1 | redact_stream
           step2_status="${PIPESTATUS[0]}"
           set -e
           echo "Code étape 2 : ${step2_status}"
@@ -206,6 +206,7 @@ jobs:
 
           echo "===== Étape 3 : FTP port 21, explicit TLS (dernier recours) ====="
           ftp_script="$(cat <<EOF
+          debug 3
           set ftp:ssl-allow yes
           set ftp:ssl-force yes
           set ssl:verify-certificate no
@@ -238,7 +239,7 @@ jobs:
           )"
           ftp_script="$(printf '%s\n' "${ftp_script}" | sed 's/^[[:space:]]*//')"
           set +e
-          timeout --kill-after=10s 45s lftp -c "${ftp_script}" 2>&1 | redact_stream
+          timeout --kill-after=10s 120s lftp -c "${ftp_script}" 2>&1 | redact_stream
           step3_status="${PIPESTATUS[0]}"
           set -e
           echo "Code étape 3 : ${step3_status}"
