@@ -83,9 +83,11 @@ jobs:
           sftp_mirror="$(cat <<EOF
           set sftp:auto-confirm yes
           set cmd:fail-exit yes
-          set net:timeout 90
-          set net:max-retries 2
-          set dns:max-retries 2
+          set net:timeout 30
+          set net:max-retries 1
+          set net:connection-limit 1
+          set mirror:parallel-transfer-count 1
+          set dns:max-retries 1
           set dns:order "inet inet6"
           set mirror:set-permissions no
           set ftp:use-site-chmod no
@@ -111,6 +113,7 @@ jobs:
           set ftp:ssl-allow yes
           set ftp:ssl-force yes
           set ssl:verify-certificate no
+          set ssl:check-hostname no
           set cmd:fail-exit yes
           set net:timeout 90
           set net:max-retries 2
@@ -147,11 +150,23 @@ jobs:
           timeout --kill-after=10s 40s lftp -c "${probe}"
           probe_status=$?
           set -e
+          sftp_ok=0
           if [ "${probe_status}" -eq 0 ]; then
-            echo "Protocole retenu : SFTP port 22."
-            timeout --kill-after=20s 300s lftp -c "${sftp_mirror}"
+            echo "Connexion SFTP établie. Envoi via SFTP port 22."
+            set +e
+            timeout --kill-after=15s 120s lftp -c "${sftp_mirror}"
+            sftp_status=$?
+            set -e
+            if [ "${sftp_status}" -eq 0 ]; then
+              sftp_ok=1
+              echo "Protocole retenu : SFTP port 22."
+            else
+              echo "Envoi SFTP échoué (code ${sftp_status}). Repli vers FTP explicite TLS, port 21."
+            fi
           else
             echo "Connexion SFTP échouée (code ${probe_status}). Repli vers FTP explicite TLS, port 21."
+          fi
+          if [ "${sftp_ok}" -ne 1 ]; then
             echo "Protocole retenu : FTP port 21 (explicit TLS)."
             timeout --kill-after=20s 300s lftp -c "${ftp_mirror}"
           fi
