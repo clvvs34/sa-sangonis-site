@@ -1,0 +1,83 @@
+# sa-sangonis.fr — configuration Apache (hébergement mutualisé OVH)
+
+# Pas de listage des répertoires
+Options -Indexes
+
+# Page d'erreur
+ErrorDocument 404 /404.html
+
+# Encodage et types
+AddDefaultCharset UTF-8
+<IfModule mod_mime.c>
+  AddCharset UTF-8 .html .css .js .xml .txt
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
+  AddType font/woff2 .woff2
+</IfModule>
+
+# ------------------------------------------------------------------
+# Redirections : http -> https et www -> sans www (https://sa-sangonis.fr)
+# IMPORTANT : n'activer qu'une fois le certificat SSL (Let's Encrypt, gratuit
+# chez OVH) actif pour sa-sangonis.fr ET www.sa-sangonis.fr, sinon le site
+# deviendrait inaccessible. Les redirections sont en 302 (temporaires) pour
+# pouvoir revenir en arrière ; passer R=302 en R=301 une fois tout vérifié.
+# ------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # www.sa-sangonis.fr -> https://sa-sangonis.fr
+  RewriteCond %{HTTP_HOST} ^www\.sa-sangonis\.fr$ [NC]
+  RewriteRule ^(.*)$ https://sa-sangonis.fr/$1 [R=302,L]
+
+  # http -> https (OVH : tester le port, et l'en-tête du proxy si présent)
+  RewriteCond %{SERVER_PORT} ^80$
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://sa-sangonis.fr/$1 [R=302,L]
+</IfModule>
+
+# En-têtes de sécurité
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), interest-cohort=()"
+  # HSTS : à décommenter seulement après plusieurs jours de HTTPS sans problème
+  # Header always set Strict-Transport-Security "max-age=31536000"
+</IfModule>
+
+# Cache navigateur
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 hour"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+  ExpiresByType text/javascript "access plus 1 week"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+  ExpiresByType image/vnd.microsoft.icon "access plus 1 month"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/xml "access plus 1 day"
+  ExpiresByType text/xml "access plus 1 day"
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.woff2$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript text/javascript application/xml image/svg+xml
+</IfModule>
+
+# Ne pas servir les fichiers cachés (sauf .well-known pour Let's Encrypt)
+<IfModule mod_rewrite.c>
+  RewriteRule "(^|/)\.(?!well-known/)" - [F]
+</IfModule>
