@@ -54,45 +54,75 @@ jobs:
           fi
 
           export LFTP_PASSWORD="${OVH_FTP_PASSWORD}"
+          export SSHPASS="${OVH_FTP_PASSWORD}"
           export DEBIAN_FRONTEND=noninteractive
           sudo apt-get update -qq
-          sudo apt-get install -y -qq lftp openssh-client
+          sudo apt-get install -y -qq sshpass lftp openssh-client
 
           host="ftp.cluster129.hosting.ovh.net"
           login="sasangw"
-          # Session d'accueil : /home/sasangw. Le miroir cible www/ (créé si absent).
-          # Pas de --delete. .htaccess et assets/ partent avec le miroir (dotfiles inclus, récursif).
-          # Le mot de passe reste dans LFTP_PASSWORD (--env-password), jamais dans l'URL ni les logs.
 
-          probe="$(cat <<EOF
-          set sftp:auto-confirm yes
-          set cmd:fail-exit yes
-          set net:timeout 20
-          set net:max-retries 1
-          set dns:max-retries 1
-          set dns:order "inet inet6"
-          set log:enabled/xfer no
-          set bmk:save-passwords no
-          set cmd:trace no
-          open --env-password --user ${login} sftp://${host}:22
-          pwd
-          bye
-          EOF
-          )"
+          # Retire le secret de toute sortie avant qu'elle n'atteigne le journal.
+          redact_stream() {
+            python3 -c 'import os,sys; pw=os.environ.get("LFTP_PASSWORD","") or ""; data=sys.stdin.buffer.read(); data=data.replace(pw.encode(), b"***") if pw else data; sys.stdout.buffer.write(data)'
+          }
 
-          sftp_mirror="$(cat <<EOF
+          batch="$(mktemp)"
+          {
+            echo "-mkdir www"
+            find . -type d \
+              -not -path '.' \
+              -not -path './.git' -not -path './.git/*' \
+              -not -path './.github' -not -path './.github/*' \
+              -printf '%d %P\n' \
+              | sort -n \
+              | while read -r _depth rel; do
+                  printf -- '-mkdir www/%s\n' "${rel}"
+                done
+            find . -type f \
+              -not -path './.git/*' \
+              -not -path './.github/*' \
+              ! -name 'README.md' \
+              -printf '%P\n' \
+              | sort \
+              | while read -r rel; do
+                  printf 'put %s www/%s\n' "${rel}" "${rel}"
+                done
+            echo "ls -la www"
+            echo "ls -la www/assets"
+          } > "${batch}"
+
+          echo "===== Étape 1 : OpenSSH sftp (batch, sshpass) ====="
+          echo "----- batch.txt -----"
+          cat "${batch}"
+          set +e
+          timeout --kill-after=10s 120s \
+            sshpass -e sftp \
+              -oStrictHostKeyChecking=accept-new \
+              -oPubkeyAuthentication=no \
+              -oPreferredAuthentications=password,keyboard-interactive \
+              -P 22 \
+              -b "${batch}" \
+              "${login}@${host}" 2>&1 | redact_stream
+          step1_status="${PIPESTATUS[0]}"
+          set -e
+          echo "Code étape 1 : ${step1_status}"
+          if [ "${step1_status}" -eq 0 ]; then
+            echo "Protocole retenu : OpenSSH sftp batch"
+            rm -f "${batch}"
+            exit 0
+          fi
+          echo "Étape 1 échouée. Passage à lftp sftp."
+
+          echo "===== Étape 2 : lftp sftp ====="
+          lftp_script="$(cat <<EOF
+          debug 3
           set sftp:auto-confirm yes
+          set sftp:connect-program "ssh -a -x -oStrictHostKeyChecking=accept-new"
           set cmd:fail-exit yes
-          set net:timeout 30
-          set net:max-retries 1
-          set net:connection-limit 1
-          set mirror:parallel-transfer-count 1
-          set dns:max-retries 1
+          set net:timeout 60
+          set dns:max-retries 2
           set dns:order "inet inet6"
-          set mirror:set-permissions no
-          set ftp:use-site-chmod no
-          set ftp:use-site-utime no
-          set ftp:use-site-utime2 no
           set log:enabled/xfer no
           set bmk:save-passwords no
           set cmd:trace no
@@ -101,25 +131,39 @@ jobs:
           set cmd:fail-exit no
           mkdir -f -p www
           set cmd:fail-exit yes
-          mirror -R --verbose --exclude-glob .git/ --exclude-glob .github/ --exclude README.md ./ www/
+          mirror -R --verbose --no-perms --no-umask --exclude-glob .git/ --exclude-glob .github/ --exclude README.md ./ www/
           set cmd:fail-exit no
-          cls -a -1 www
-          cls -a -1 www/assets
+          cls -la www
+          cls -la www/assets
           bye
           EOF
           )"
+          lftp_script="$(printf '%s\n' "${lftp_script}" | sed 's/^[[:space:]]*//')"
+          set +e
+          timeout --kill-after=15s 180s lftp -c "${lftp_script}" 2>&1 | redact_stream
+          step2_status="${PIPESTATUS[0]}"
+          set -e
+          echo "Code étape 2 : ${step2_status}"
+          if [ "${step2_status}" -eq 0 ]; then
+            echo "Protocole retenu : lftp sftp"
+            rm -f "${batch}"
+            exit 0
+          fi
+          echo "Étape 2 échouée. Dernier recours : FTP explicite TLS (délai court)."
 
-          ftp_mirror="$(cat <<EOF
+          echo "===== Étape 3 : FTP port 21, explicit TLS (dernier recours) ====="
+          ftp_script="$(cat <<EOF
           set ftp:ssl-allow yes
           set ftp:ssl-force yes
           set ssl:verify-certificate no
           set ssl:check-hostname no
-          set cmd:fail-exit yes
-          set net:timeout 90
-          set net:max-retries 2
-          set dns:max-retries 2
-          set dns:order "inet inet6"
           set ftp:passive-mode yes
+          set ftp:ignore-pasv-address yes
+          set cmd:fail-exit yes
+          set net:timeout 20
+          set net:max-retries 1
+          set dns:max-retries 1
+          set dns:order "inet inet6"
           set mirror:set-permissions no
           set ftp:use-site-chmod no
           set ftp:use-site-utime no
@@ -132,44 +176,25 @@ jobs:
           set cmd:fail-exit no
           mkdir -f -p www
           set cmd:fail-exit yes
-          mirror -R --verbose --exclude-glob .git/ --exclude-glob .github/ --exclude README.md ./ www/
+          mirror -R --verbose --no-perms --no-umask --exclude-glob .git/ --exclude-glob .github/ --exclude README.md ./ www/
           set cmd:fail-exit no
-          cls -a -1 www
-          cls -a -1 www/assets
+          cls -la www
+          cls -la www/assets
           bye
           EOF
           )"
-
-          # Les heredocs ci-dessus sont indentés : lftp n'accepte pas les commandes préfixées d'espaces.
-          probe="$(printf '%s\n' "${probe}" | sed 's/^[[:space:]]*//')"
-          sftp_mirror="$(printf '%s\n' "${sftp_mirror}" | sed 's/^[[:space:]]*//')"
-          ftp_mirror="$(printf '%s\n' "${ftp_mirror}" | sed 's/^[[:space:]]*//')"
-
-          echo "Tentative de connexion SFTP sur ${host}, port 22."
+          ftp_script="$(printf '%s\n' "${ftp_script}" | sed 's/^[[:space:]]*//')"
           set +e
-          timeout --kill-after=10s 40s lftp -c "${probe}"
-          probe_status=$?
+          timeout --kill-after=10s 45s lftp -c "${ftp_script}" 2>&1 | redact_stream
+          step3_status="${PIPESTATUS[0]}"
           set -e
-          sftp_ok=0
-          if [ "${probe_status}" -eq 0 ]; then
-            echo "Connexion SFTP établie. Envoi via SFTP port 22."
-            set +e
-            timeout --kill-after=15s 120s lftp -c "${sftp_mirror}"
-            sftp_status=$?
-            set -e
-            if [ "${sftp_status}" -eq 0 ]; then
-              sftp_ok=1
-              echo "Protocole retenu : SFTP port 22."
-            else
-              echo "Envoi SFTP échoué (code ${sftp_status}). Repli vers FTP explicite TLS, port 21."
-            fi
-          else
-            echo "Connexion SFTP échouée (code ${probe_status}). Repli vers FTP explicite TLS, port 21."
+          echo "Code étape 3 : ${step3_status}"
+          rm -f "${batch}"
+          if [ "${step3_status}" -ne 0 ]; then
+            echo "Protocole retenu : aucun (les trois étapes ont échoué)."
+            exit "${step3_status}"
           fi
-          if [ "${sftp_ok}" -ne 1 ]; then
-            echo "Protocole retenu : FTP port 21 (explicit TLS)."
-            timeout --kill-after=20s 300s lftp -c "${ftp_mirror}"
-          fi
+          echo "Protocole retenu : FTP port 21 (explicit TLS)"
 
       - name: Verify public URLs
         if: steps.gate.outputs.skip != 'true'
@@ -184,16 +209,22 @@ jobs:
             "https://sa-sangonis.fr/page-inexistante"
           )
           home_url="https://sa-sangonis.fr"
+          http_url="http://sa-sangonis.fr"
           home_headers=""
+          http_headers=""
           for url in "${urls[@]}"; do
             echo "===== ${url} ====="
             headers=""
-            if [ "${url}" = "${home_url}" ]; then
+            if [ "${url}" = "${home_url}" ] || [ "${url}" = "${http_url}" ]; then
               if ! headers="$(curl -sSI --max-time 30 --show-error "${url}")"; then
-                echo "Impossible de lire les en-têtes de la page d'accueil."
+                echo "Impossible de lire les en-têtes de ${url}."
                 exit 1
               fi
-              home_headers="${headers}"
+              if [ "${url}" = "${home_url}" ]; then
+                home_headers="${headers}"
+              else
+                http_headers="${headers}"
+              fi
             else
               headers="$(curl -sSI --max-time 30 --show-error "${url}" || true)"
             fi
@@ -207,6 +238,7 @@ jobs:
           done
 
           home_status="$(printf '%s\n' "${home_headers}" | awk 'toupper($1) ~ /^HTTP\// { code = $2 } END { print code }')"
+          home_status="${home_status//$'\r'/}"
           if ! home_body="$(curl -sS --max-time 30 --show-error "${home_url}")"; then
             echo "Impossible de lire le corps de la page d'accueil."
             exit 1
@@ -220,3 +252,24 @@ jobs:
             exit 1
           fi
           echo "Contrôle page d'accueil : HTTP 200 et le corps contient Sangonis."
+
+          http_status="$(printf '%s\n' "${http_headers}" | awk 'toupper($1) ~ /^HTTP\// { code = $2 } END { print code }')"
+          http_status="${http_status//$'\r'/}"
+          http_location="$(printf '%s\n' "${http_headers}" | awk 'BEGIN{IGNORECASE=1} /^Location:/ { print $2; exit }')"
+          http_location="${http_location//$'\r'/}"
+          echo "Contrôle HTTP : ${http_status} Location: ${http_location:-<aucune>}"
+          case "${http_status}" in
+            301|302|303|307|308) ;;
+            *)
+              echo "http://sa-sangonis.fr ne redirige pas vers HTTPS (code ${http_status:-<aucun>})."
+              exit 1
+              ;;
+          esac
+          case "${http_location}" in
+            https://*) ;;
+            *)
+              echo "La redirection HTTP ne pointe pas vers https (Location: ${http_location:-<aucune>})."
+              exit 1
+              ;;
+          esac
+          echo "Contrôle redirection : HTTP redirige vers HTTPS."
