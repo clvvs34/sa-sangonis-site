@@ -1,0 +1,261 @@
+{
+ "source": "https://saintandredesangonis.fr/agenda/",
+ "evenements": [
+  {
+   "titre": "Loisirs en famille",
+   "debut": "2026-10-29 14:30:00",
+   "fin": "2026-10-29 16:30:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/loisirs-en-famille-12/"
+  },
+  {
+   "titre": "Exposition photo",
+   "debut": "2026-10-30 00:00:00",
+   "fin": "2026-11-01 23:59:59",
+   "journee": true,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/exposition-photo/"
+  },
+  {
+   "titre": "HALLOWEEN – LE PALAIS DU RIRE",
+   "debut": "2026-10-30 16:00:00",
+   "fin": "2026-10-30 18:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/halloween-le-palais-du-rire/"
+  },
+  {
+   "titre": "Halloween – Fête Foraine Hantée",
+   "debut": "2026-10-30 19:30:00",
+   "fin": "2026-10-30 23:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/halloween-fete-foraine-hantee/"
+  },
+  {
+   "titre": "Loto",
+   "debut": "2026-11-01 17:00:00",
+   "fin": "2026-11-01 19:30:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/loto-24/"
+  },
+  {
+   "titre": "Rencontre du groupe « lecture »",
+   "debut": "2026-11-06 18:00:00",
+   "fin": "2026-11-06 19:30:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/rencontre-du-groupe-lecture-3/"
+  },
+  {
+   "titre": "Concours de Belote",
+   "debut": "2026-11-07 14:00:00",
+   "fin": "2026-11-07 17:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/concours-de-belote-10/"
+  },
+  {
+   "titre": "Soirée impro avec la troupe VIP – Very Impro People",
+   "debut": "2026-11-07 20:00:00",
+   "fin": "2026-11-07 22:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/soiree-theatre-dimpro-avec-la-sauce/"
+  },
+  {
+   "titre": "Loto de la société des chasseurs et propriétaires",
+   "debut": "2026-11-08 17:00:00",
+   "fin": "2026-11-08 20:30:00",
+   "journee": false,
+   "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
+   "url": "https://saintandredesangonis.fr/event/loto-de-la-societe-des-chasseurs-et-proprietaires-2/"
+  },
+  {
+   "titre": "Don de sang",
+   "debut": "2026-11-09 14:30:00",
+   "fin": "2026-11-09 19:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/don-de-sang-12/"
+  },
+  {
+   "titre": "Ateliers jeux à la bibliothèque",
+   "debut": "2026-11-13 17:00:00",
+   "fin": "2026-11-13 18:30:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/ateliers-jeux-a-la-bibliotheque-6/"
+  },
+  {
+   "titre": "Projection du documentaire de Vincent Verzat « le vivant qui se défend » en partenariat avec l’ASAVH",
+   "debut": "2026-11-13 18:30:00",
+   "fin": "2026-11-13 20:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/projection-du-documentaire-de-vincent-verzat-le-vivant-qui-se-defend-en-partenariat-avec-lasavh/"
+  },
+  {
+   "titre": "Bourse aux jouets",
+   "debut": "2026-11-14 09:00:00",
+   "fin": "2026-11-14 17:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/bourse-aux-jouets-4/"
+  },
+  {
+   "titre": "Gravember 2026",
+   "debut": "2026-11-15 08:00:00",
+   "fin": "2026-11-15 17:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/gravember-2026/"
+  },
+  {
+   "titre": "Alors on danse ?",
+   "debut": "2026-11-15 14:30:00",
+   "fin": "2026-11-15 16:30:00",
+   "journee": false,
+   "lieu": "Complexe sportif Raymond Boisset",
+   "url": "https://saintandredesangonis.fr/event/alors-on-danse-6/"
+  },
+  {
+   "titre": "Sortie à la Jonquera",
+   "debut": "2026-11-18 08:30:00",
+   "fin": "2026-11-18 17:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/sortie-a-la-jonquera/"
+  },
+  {
+   "titre": "Concert du groupe Baguenaude à la chapelle de Cambous",
+   "debut": "2026-11-21 18:00:00",
+   "fin": "2026-11-21 20:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/concert-baguenaude/"
+  },
+  {
+   "titre": "Loto de l’Amicale des anciens élèves de l’école Jeanne d’Arc",
+   "debut": "2026-11-22 17:00:00",
+   "fin": "2026-11-22 20:30:00",
+   "journee": false,
+   "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
+   "url": "https://saintandredesangonis.fr/event/loto-de-lamicale-des-anciens-eleves-de-lecole-jeanne-darc-4/"
+  },
+  {
+   "titre": "Ateliers jeux à la bibliothèque",
+   "debut": "2026-11-27 17:00:00",
+   "fin": "2026-11-27 18:30:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/ateliers-jeux-a-la-bibliotheque-7/"
+  },
+  {
+   "titre": "Soirée jeux avec La Sauce",
+   "debut": "2026-11-28 18:30:00",
+   "fin": "2026-11-28 22:30:00",
+   "journee": false,
+   "lieu": "Salle du 3ème âge (en face de Mozaïka)",
+   "url": "https://saintandredesangonis.fr/event/soiree-jeux-avec-la-sauce-10/"
+  },
+  {
+   "titre": "Loto de la Boule Dorée Joyeuse",
+   "debut": "2026-11-29 17:00:00",
+   "fin": "2026-11-29 20:30:00",
+   "journee": false,
+   "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
+   "url": "https://saintandredesangonis.fr/event/loto-de-la-boule-doree-joyeuse-4/"
+  },
+  {
+   "titre": "Repas de la fête",
+   "debut": "2026-12-05 19:00:00",
+   "fin": "2026-12-06 02:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/repas-de-la-fete/"
+  },
+  {
+   "titre": "Loto de Los Porcs Nègres",
+   "debut": "2026-12-06 17:00:00",
+   "fin": "2026-12-06 20:30:00",
+   "journee": false,
+   "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
+   "url": "https://saintandredesangonis.fr/event/loto-de-los-porcs-negres-6/"
+  },
+  {
+   "titre": "Ateliers jeux à la bibliothèque",
+   "debut": "2026-12-11 17:00:00",
+   "fin": "2026-12-11 18:30:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/ateliers-jeux-a-la-bibliotheque-8/"
+  },
+  {
+   "titre": "Loto de l’Amicale des Retraités Saint-Andréens",
+   "debut": "2026-12-13 17:00:00",
+   "fin": "2026-12-13 20:30:00",
+   "journee": false,
+   "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
+   "url": "https://saintandredesangonis.fr/event/loto-de-lamicale-des-retraites-saint-andreens-2/"
+  },
+  {
+   "titre": "Loto de l’Olympique Saint-Andréen",
+   "debut": "2026-12-20 17:00:00",
+   "fin": "2026-12-20 20:30:00",
+   "journee": false,
+   "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
+   "url": "https://saintandredesangonis.fr/event/loto-de-los-porcs-negres-7/"
+  },
+  {
+   "titre": "Loto de la Société des Chasseurs et Proriétaires",
+   "debut": "2026-12-27 17:00:00",
+   "fin": "2026-12-27 20:30:00",
+   "journee": false,
+   "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
+   "url": "https://saintandredesangonis.fr/event/loto-de-la-societe-des-chasseurs-et-prorietaires/"
+  },
+  {
+   "titre": "Réveillon 2027",
+   "debut": "2026-12-31 19:30:00",
+   "fin": "2027-01-01 02:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/reveillon-2027/"
+  },
+  {
+   "titre": "Concours de Belote",
+   "debut": "2027-01-16 14:00:00",
+   "fin": "2027-01-16 17:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/concours-de-belote-11/"
+  },
+  {
+   "titre": "Concert les Darons",
+   "debut": "2027-01-23 19:00:00",
+   "fin": "2027-01-23 21:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/concert-les-darons/"
+  },
+  {
+   "titre": "Concours de Belote",
+   "debut": "2027-02-27 14:00:00",
+   "fin": "2027-02-27 17:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/concours-de-belote-12/"
+  },
+  {
+   "titre": "Concours de Belote",
+   "debut": "2027-03-20 14:00:00",
+   "fin": "2027-03-20 17:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/concours-de-belote-13/"
+  }
+ ]
+}

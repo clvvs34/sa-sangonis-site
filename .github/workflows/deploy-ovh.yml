@@ -145,6 +145,8 @@ jobs:
               -not -path '.' \
               -not -path './.git' -not -path './.git/*' \
               -not -path './.github' -not -path './.github/*' \
+              -not -path './.github-proposed' -not -path './.github-proposed/*' \
+              -not -path './scripts' -not -path './scripts/*' \
               -printf '%d %P\n' \
               | sort -n \
               | while read -r _depth rel; do
@@ -153,6 +155,8 @@ jobs:
             find . -type f \
               -not -path './.git/*' \
               -not -path './.github/*' \
+              -not -path './.github-proposed/*' \
+              -not -path './scripts/*' \
               ! -name 'README.md' \
               -printf '%P\n' \
               | sort \
@@ -213,7 +217,7 @@ jobs:
           set cmd:fail-exit no
           mkdir -f -p www
           set cmd:fail-exit yes
-          mirror -R --verbose --no-perms --no-umask --exclude-glob .git/ --exclude-glob .github/ --exclude README.md ./ www/
+          mirror -R --verbose --no-perms --no-umask --exclude-glob .git/ --exclude-glob .github/ --exclude-glob .github-proposed/ --exclude-glob scripts/ --exclude README.md ./ www/
           set cmd:fail-exit no
           cls -la www
           cls -la www/assets
@@ -260,7 +264,7 @@ jobs:
           set cmd:fail-exit no
           mkdir -f -p www
           set cmd:fail-exit yes
-          mirror -R --verbose --no-perms --no-umask --exclude-glob .git/ --exclude-glob .github/ --exclude README.md ./ www/
+          mirror -R --verbose --no-perms --no-umask --exclude-glob .git/ --exclude-glob .github/ --exclude-glob .github-proposed/ --exclude-glob scripts/ --exclude README.md ./ www/
           set cmd:fail-exit no
           cls -la www
           cls -la www/assets

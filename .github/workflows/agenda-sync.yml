@@ -1,0 +1,64 @@
+# À placer dans .github/workflows/agenda-sync.yml du dépôt clvvs34/sa-sangonis-site.
+# Toutes les 6 heures : récupère l'agenda de la Ville (The Events Calendar) et les vidéos
+# des séances du conseil municipal (YouTube, onglet « En direct »), régénère les fichiers
+# statiques, et s'il y a un changement : commit sur main puis lance le déploiement OVH.
+#
+# Remarque : un push fait avec GITHUB_TOKEN ne déclenche PAS les autres workflows (sécurité GitHub).
+# On déclenche donc explicitement deploy-ovh.yml via workflow_dispatch, seule exception autorisée
+# (deploy-ovh.yml doit garder son déclencheur « workflow_dispatch: »).
+name: Synchronisation agenda et vidéos
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"   # 00:17, 06:17, 12:17, 18:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write   # commit des fichiers régénérés
+  actions: write    # lancement du workflow de déploiement
+
+concurrency:
+  group: sync-site
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Agenda de la commune
+        run: python3 scripts/sync-agenda.py
+
+      - name: Vidéos des conseils municipaux
+        # YouTube peut limiter les requêtes depuis les serveurs GitHub : un échec ne bloque pas l'agenda.
+        continue-on-error: true
+        run: python3 scripts/sync-videos.py
+
+      - name: Commit si changement
+        id: commit
+        run: |
+          git config user.name  "sa-sangonis-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add agenda.html index.html conseils-municipaux.html assets/agenda.json assets/conseils/conseils.json
+          if git diff --cached --quiet; then
+            echo "Aucun changement."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "Synchronisation automatique de l'agenda et des vidéos"
+            git push origin HEAD:main
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Lancer le déploiement OVH
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-ovh.yml --ref main

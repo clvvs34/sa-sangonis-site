@@ -1,0 +1,88 @@
+{
+  "_aide": "Source de conseils-municipaux.html et de l'encart d'accueil. Après modification : python3 scripts/build-conseils.py. Documents publiés : UNIQUEMENT ordres du jour et procès-verbaux APPROUVÉS, en PDF dans assets/conseils/AAAA-MM-JJ-ordre-du-jour.pdf ou AAAA-MM-JJ-proces-verbal.pdf, déclarés dans 'documents' (type ordre-du-jour ou proces-verbal). 'pv_en_attente': true affiche « Procès-verbal : en attente d’approbation ». Les vidéos sont ajoutées automatiquement par scripts/sync-videos.py (lives de la chaîne YouTube de la Ville).",
+  "seances": [
+    {
+      "date": "2026-09-24",
+      "titre": "Conseil municipal",
+      "video": {
+        "id": "HG21JhrJgW4",
+        "titre": "Conseil municipal du 24 septembre 2026",
+        "duree": "3 h 00"
+      },
+      "documents": [
+        {
+          "type": "ordre-du-jour",
+          "titre": "Ordre du jour",
+          "fichier": "assets/conseils/2026-09-24-ordre-du-jour.pdf"
+        }
+      ]
+    },
+    {
+      "date": "2026-06-18",
+      "titre": "Conseil municipal",
+      "video": {
+        "id": "3D8OLEzV_AQ",
+        "titre": "Conseil municipal du 18 juin 2026",
+        "duree": "2 h 04"
+      },
+      "documents": [
+        {
+          "type": "ordre-du-jour",
+          "titre": "Ordre du jour",
+          "fichier": "assets/conseils/2026-06-18-ordre-du-jour.pdf"
+        }
+      ],
+      "pv_en_attente": true
+    },
+    {
+      "date": "2026-06-05",
+      "titre": "Conseil municipal",
+      "video": null,
+      "documents": [
+        {
+          "type": "ordre-du-jour",
+          "titre": "Ordre du jour",
+          "fichier": "assets/conseils/2026-06-05-ordre-du-jour.pdf"
+        }
+      ],
+      "sous_titre": "Désignation des délégués pour les élections sénatoriales du 27 septembre 2026"
+    },
+    {
+      "date": "2026-04-29",
+      "titre": "Conseil municipal",
+      "video": {
+        "id": "oVTh526xm40",
+        "titre": "Conseil municipal du 29 avril 2026",
+        "duree": "2 h 50"
+      },
+      "documents": [
+        {
+          "type": "ordre-du-jour",
+          "titre": "Ordre du jour",
+          "fichier": "assets/conseils/2026-04-29-ordre-du-jour.pdf"
+        }
+      ],
+      "pv_en_attente": true
+    },
+    {
+      "date": "2026-04-08",
+      "titre": "Conseil municipal",
+      "video": {
+        "id": "x-FYTIsbNOY",
+        "titre": "Conseil municipal du 08 avril 2026 - Saint-André-de-Sangonis",
+        "duree": "1 h 11"
+      },
+      "documents": []
+    },
+    {
+      "date": "2026-03-28",
+      "titre": "Séance d’installation du conseil municipal",
+      "video": {
+        "id": "77WN3lgkODA",
+        "titre": "Séance d'installation du conseil municipal - 28 mars 2026",
+        "duree": "58 min"
+      },
+      "documents": []
+    }
+  ]
+}

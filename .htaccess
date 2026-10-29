@@ -41,7 +41,8 @@ AddDefaultCharset UTF-8
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), interest-cohort=()"
-  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
+  # CSP : tout vient du site
+  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
   # HSTS : à décommenter seulement après plusieurs jours de HTTPS sans problème
   # Header always set Strict-Transport-Security "max-age=31536000"
 </IfModule>
@@ -78,12 +79,13 @@ AddDefaultCharset UTF-8
   AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript text/javascript application/xml image/svg+xml
 </IfModule>
 
+# Scripts de synchronisation et propositions de workflow : jamais servis
+<IfModule mod_rewrite.c>
+  RewriteRule ^(scripts|\.github-proposed)(/|$) - [F,L]
+</IfModule>
+
 # Ne pas servir les fichiers cachés (sauf .well-known pour Let's Encrypt)
 <IfModule mod_rewrite.c>
   RewriteRule "(^|/)\.(?!well-known/)" - [F]
 </IfModule>
 
-# Données jamais servies directement (repli éventuel sous www/data).
-<IfModule mod_rewrite.c>
-  RewriteRule ^data(/|$) - [F,L]
-</IfModule>
