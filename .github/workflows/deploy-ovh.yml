@@ -1,0 +1,204 @@
+name: Deploy OVH
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-ovh
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy static site to OVH
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Skip when OVH_FTP_PASSWORD is empty
+        id: gate
+        env:
+          OVH_FTP_PASSWORD: ${{ secrets.OVH_FTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [ -z "${OVH_FTP_PASSWORD}" ]; then
+            echo "skip=true" >> "${GITHUB_OUTPUT}"
+            echo "OVH_FTP_PASSWORD est vide : déploiement ignoré (succès, aucun envoi)."
+            echo "::notice title=Déploiement ignoré::Le secret OVH_FTP_PASSWORD est vide. Aucun fichier n'est envoyé. Le job se termine avec succès."
+            exit 0
+          fi
+          echo "skip=false" >> "${GITHUB_OUTPUT}"
+
+      - name: Upload to OVH
+        if: steps.gate.outputs.skip != 'true'
+        env:
+          OVH_FTP_PASSWORD: ${{ secrets.OVH_FTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [ -z "${OVH_FTP_PASSWORD}" ]; then
+            echo "OVH_FTP_PASSWORD est vide : déploiement ignoré (succès, aucun envoi)."
+            echo "::notice title=Déploiement ignoré::Le secret OVH_FTP_PASSWORD est vide. Aucun fichier n'est envoyé. Le job se termine avec succès."
+            exit 0
+          fi
+
+          export LFTP_PASSWORD="${OVH_FTP_PASSWORD}"
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp openssh-client
+
+          host="ftp.cluster129.hosting.ovh.net"
+          login="sasangw"
+          # Session d'accueil : /home/sasangw. Le miroir cible www/ (créé si absent).
+          # Pas de --delete. .htaccess et assets/ partent avec le miroir (dotfiles inclus, récursif).
+          # Le mot de passe reste dans LFTP_PASSWORD (--env-password), jamais dans l'URL ni les logs.
+
+          probe="$(cat <<EOF
+          set sftp:auto-confirm yes
+          set cmd:fail-exit yes
+          set net:timeout 20
+          set net:max-retries 1
+          set dns:max-retries 1
+          set dns:order "inet inet6"
+          set log:enabled/xfer no
+          set bmk:save-passwords no
+          set cmd:trace no
+          open --env-password --user ${login} sftp://${host}:22
+          pwd
+          bye
+          EOF
+          )"
+
+          sftp_mirror="$(cat <<EOF
+          set sftp:auto-confirm yes
+          set cmd:fail-exit yes
+          set net:timeout 90
+          set net:max-retries 2
+          set dns:max-retries 2
+          set dns:order "inet inet6"
+          set mirror:set-permissions no
+          set ftp:use-site-chmod no
+          set ftp:use-site-utime no
+          set ftp:use-site-utime2 no
+          set log:enabled/xfer no
+          set bmk:save-passwords no
+          set cmd:trace no
+          open --env-password --user ${login} sftp://${host}:22
+          pwd
+          set cmd:fail-exit no
+          mkdir -f -p www
+          set cmd:fail-exit yes
+          mirror -R --verbose --exclude-glob .git/ --exclude-glob .github/ --exclude README.md ./ www/
+          set cmd:fail-exit no
+          cls -a -1 www
+          cls -a -1 www/assets
+          bye
+          EOF
+          )"
+
+          ftp_mirror="$(cat <<EOF
+          set ftp:ssl-allow yes
+          set ftp:ssl-force yes
+          set ssl:verify-certificate no
+          set cmd:fail-exit yes
+          set net:timeout 90
+          set net:max-retries 2
+          set dns:max-retries 2
+          set dns:order "inet inet6"
+          set ftp:passive-mode yes
+          set mirror:set-permissions no
+          set ftp:use-site-chmod no
+          set ftp:use-site-utime no
+          set ftp:use-site-utime2 no
+          set log:enabled/xfer no
+          set bmk:save-passwords no
+          set cmd:trace no
+          open --env-password --user ${login} ftp://${host}:21
+          pwd
+          set cmd:fail-exit no
+          mkdir -f -p www
+          set cmd:fail-exit yes
+          mirror -R --verbose --exclude-glob .git/ --exclude-glob .github/ --exclude README.md ./ www/
+          set cmd:fail-exit no
+          cls -a -1 www
+          cls -a -1 www/assets
+          bye
+          EOF
+          )"
+
+          # Les heredocs ci-dessus sont indentés : lftp n'accepte pas les commandes préfixées d'espaces.
+          probe="$(printf '%s\n' "${probe}" | sed 's/^[[:space:]]*//')"
+          sftp_mirror="$(printf '%s\n' "${sftp_mirror}" | sed 's/^[[:space:]]*//')"
+          ftp_mirror="$(printf '%s\n' "${ftp_mirror}" | sed 's/^[[:space:]]*//')"
+
+          echo "Tentative de connexion SFTP sur ${host}, port 22."
+          set +e
+          timeout --kill-after=10s 40s lftp -c "${probe}"
+          probe_status=$?
+          set -e
+          if [ "${probe_status}" -eq 0 ]; then
+            echo "Protocole retenu : SFTP port 22."
+            timeout --kill-after=20s 300s lftp -c "${sftp_mirror}"
+          else
+            echo "Connexion SFTP échouée (code ${probe_status}). Repli vers FTP explicite TLS, port 21."
+            echo "Protocole retenu : FTP port 21 (explicit TLS)."
+            timeout --kill-after=20s 300s lftp -c "${ftp_mirror}"
+          fi
+
+      - name: Verify public URLs
+        if: steps.gate.outputs.skip != 'true'
+        run: |
+          set -euo pipefail
+          urls=(
+            "https://sa-sangonis.fr"
+            "http://sa-sangonis.fr"
+            "https://www.sa-sangonis.fr"
+            "https://sa-sangonis.fr/mentions-legales.html"
+            "https://sa-sangonis.fr/assets/style.css"
+            "https://sa-sangonis.fr/page-inexistante"
+          )
+          home_url="https://sa-sangonis.fr"
+          home_headers=""
+          for url in "${urls[@]}"; do
+            echo "===== ${url} ====="
+            headers=""
+            if [ "${url}" = "${home_url}" ]; then
+              if ! headers="$(curl -sSI --max-time 30 --show-error "${url}")"; then
+                echo "Impossible de lire les en-têtes de la page d'accueil."
+                exit 1
+              fi
+              home_headers="${headers}"
+            else
+              headers="$(curl -sSI --max-time 30 --show-error "${url}" || true)"
+            fi
+            if [ -z "${headers}" ]; then
+              echo "(pas de réponse)"
+              continue
+            fi
+            if ! printf '%s\n' "${headers}" | grep -iE '^(HTTP/|Location:)'; then
+              echo "(pas de ligne d'état ni d'en-tête Location)"
+            fi
+          done
+
+          home_status="$(printf '%s\n' "${home_headers}" | awk 'toupper($1) ~ /^HTTP\// { code = $2 } END { print code }')"
+          if ! home_body="$(curl -sS --max-time 30 --show-error "${home_url}")"; then
+            echo "Impossible de lire le corps de la page d'accueil."
+            exit 1
+          fi
+          if [ "${home_status}" != "200" ]; then
+            echo "La page d'accueil ${home_url} a répondu HTTP ${home_status:-<aucune>}, 200 attendu."
+            exit 1
+          fi
+          if ! printf '%s' "${home_body}" | grep -q 'Sangonis'; then
+            echo "Le corps de la page d'accueil ne contient pas « Sangonis »."
+            exit 1
+          fi
+          echo "Contrôle page d'accueil : HTTP 200 et le corps contient Sangonis."
