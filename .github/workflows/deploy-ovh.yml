@@ -63,8 +63,33 @@ jobs:
           login="sasangw"
 
           # Retire le secret de toute sortie avant qu'elle n'atteigne le journal.
+          # Lecture au fil de l'eau : un filtre qui attend la fin du flux bloque lftp en debug.
+          cat > /tmp/redact-stream.py << 'PY'
+          import os, sys
+          pw = os.environ.get("LFTP_PASSWORD", "").encode()
+          buf = b""
+          while True:
+              chunk = sys.stdin.buffer.read(4096)
+              if not chunk:
+                  break
+              buf += chunk
+              if pw and len(buf) > len(pw):
+                  keep = len(pw) - 1
+                  head, buf = buf[:-keep], buf[-keep:]
+                  sys.stdout.buffer.write(head.replace(pw, b"***"))
+                  sys.stdout.buffer.flush()
+              elif not pw:
+                  sys.stdout.buffer.write(buf)
+                  sys.stdout.buffer.flush()
+                  buf = b""
+          if buf:
+              if pw:
+                  buf = buf.replace(pw, b"***")
+              sys.stdout.buffer.write(buf)
+              sys.stdout.buffer.flush()
+          PY
           redact_stream() {
-            python3 -c 'import os,sys; pw=os.environ.get("LFTP_PASSWORD","") or ""; data=sys.stdin.buffer.read(); data=data.replace(pw.encode(), b"***") if pw else data; sys.stdout.buffer.write(data)'
+            python3 /tmp/redact-stream.py
           }
 
           batch="$(mktemp)"
@@ -96,8 +121,12 @@ jobs:
           echo "----- batch.txt -----"
           cat "${batch}"
           set +e
+          # sftp -b ajoute -oBatchMode=yes après les options. OpenSSH garde la
+          # première valeur : -oBatchMode=no doit précéder, sinon le mot de passe
+          # n'est jamais demandé et l'authentification échoue.
           timeout --kill-after=10s 120s \
             sshpass -e sftp \
+              -oBatchMode=no \
               -oStrictHostKeyChecking=accept-new \
               -oPubkeyAuthentication=no \
               -oPreferredAuthentications=password,keyboard-interactive \
