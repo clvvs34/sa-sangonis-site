@@ -7,7 +7,12 @@
    "fin": "2026-10-29 16:30:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/loisirs-en-famille-12/"
+   "url": "https://saintandredesangonis.fr/event/loisirs-en-famille-12/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/AUTOMNE-2026-PROGRAMME-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Exposition photo",
@@ -15,7 +20,12 @@
    "fin": "2026-11-01 23:59:59",
    "journee": true,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/exposition-photo/"
+   "url": "https://saintandredesangonis.fr/event/exposition-photo/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/5162acf3-c988-4a1a-bfd4-43cccc6e20fe-212x300.png",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "HALLOWEEN – LE PALAIS DU RIRE",
@@ -23,7 +33,12 @@
    "fin": "2026-10-30 18:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/halloween-le-palais-du-rire/"
+   "url": "https://saintandredesangonis.fr/event/halloween-le-palais-du-rire/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/HALLOWEEN-ENFANT-2026-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Halloween – Fête Foraine Hantée",
@@ -31,7 +46,12 @@
    "fin": "2026-10-30 23:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/halloween-fete-foraine-hantee/"
+   "url": "https://saintandredesangonis.fr/event/halloween-fete-foraine-hantee/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/HALLOWEEN-ADULTE-2026-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Loto",
@@ -39,7 +59,12 @@
    "fin": "2026-11-01 19:30:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/loto-24/"
+   "url": "https://saintandredesangonis.fr/event/loto-24/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/dce171ed-fc5f-4277-94b6-ac87a323f697-200x300.jpeg",
+    "largeur": 200,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Rencontre du groupe « lecture »",
@@ -47,7 +72,12 @@
    "fin": "2026-11-06 19:30:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/rencontre-du-groupe-lecture-3/"
+   "url": "https://saintandredesangonis.fr/event/rencontre-du-groupe-lecture-3/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/01/Image2-1.jpg",
+    "largeur": 193,
+    "hauteur": 129
+   }
   },
   {
    "titre": "Concours de Belote",
@@ -55,7 +85,12 @@
    "fin": "2026-11-07 17:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/concours-de-belote-10/"
+   "url": "https://saintandredesangonis.fr/event/concours-de-belote-10/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/BELOTE-2026-2027-212x300.png",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Soirée impro avec la troupe VIP – Very Impro People",
@@ -63,7 +98,12 @@
    "fin": "2026-11-07 22:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/soiree-theatre-dimpro-avec-la-sauce/"
+   "url": "https://saintandredesangonis.fr/event/soiree-theatre-dimpro-avec-la-sauce/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/afficheVIP4-212x300.png",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Loto de la société des chasseurs et propriétaires",
@@ -71,7 +111,12 @@
    "fin": "2026-11-08 20:30:00",
    "journee": false,
    "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
-   "url": "https://saintandredesangonis.fr/event/loto-de-la-societe-des-chasseurs-et-proprietaires-2/"
+   "url": "https://saintandredesangonis.fr/event/loto-de-la-societe-des-chasseurs-et-proprietaires-2/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2025/08/IMAGES-PORTRAIT-1-1-200x300.jpg",
+    "largeur": 200,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Don de sang",
@@ -79,7 +124,12 @@
    "fin": "2026-11-09 19:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/don-de-sang-12/"
+   "url": "https://saintandredesangonis.fr/event/don-de-sang-12/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/Capture-decran-2026-10-19-140129-210x300.png",
+    "largeur": 210,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Ateliers jeux à la bibliothèque",
@@ -87,7 +137,12 @@
    "fin": "2026-11-13 18:30:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/ateliers-jeux-a-la-bibliotheque-6/"
+   "url": "https://saintandredesangonis.fr/event/ateliers-jeux-a-la-bibliotheque-6/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/790756347_958277870620272_3328949176693620269_n-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Projection du documentaire de Vincent Verzat « le vivant qui se défend » en partenariat avec l’ASAVH",
@@ -95,7 +150,12 @@
    "fin": "2026-11-13 20:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/projection-du-documentaire-de-vincent-verzat-le-vivant-qui-se-defend-en-partenariat-avec-lasavh/"
+   "url": "https://saintandredesangonis.fr/event/projection-du-documentaire-de-vincent-verzat-le-vivant-qui-se-defend-en-partenariat-avec-lasavh/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/IMAGES-4-3-300x200.jpg",
+    "largeur": 300,
+    "hauteur": 200
+   }
   },
   {
    "titre": "Bourse aux jouets",
@@ -103,7 +163,12 @@
    "fin": "2026-11-14 17:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/bourse-aux-jouets-4/"
+   "url": "https://saintandredesangonis.fr/event/bourse-aux-jouets-4/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/Bourse-aux-jouets-2026-212x300.png",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Gravember 2026",
@@ -111,7 +176,12 @@
    "fin": "2026-11-15 17:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/gravember-2026/"
+   "url": "https://saintandredesangonis.fr/event/gravember-2026/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/Affiche-Gravember-2026-212x300.jpeg",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Alors on danse ?",
@@ -119,7 +189,12 @@
    "fin": "2026-11-15 16:30:00",
    "journee": false,
    "lieu": "Complexe sportif Raymond Boisset",
-   "url": "https://saintandredesangonis.fr/event/alors-on-danse-6/"
+   "url": "https://saintandredesangonis.fr/event/alors-on-danse-6/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/2026-AFFICHES-A4-1-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Sortie à la Jonquera",
@@ -127,7 +202,12 @@
    "fin": "2026-11-18 17:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/sortie-a-la-jonquera/"
+   "url": "https://saintandredesangonis.fr/event/sortie-a-la-jonquera/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/Sortie-a-la-Jonquera-212x300.png",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Concert du groupe Baguenaude à la chapelle de Cambous",
@@ -135,7 +215,12 @@
    "fin": "2026-11-21 20:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/concert-baguenaude/"
+   "url": "https://saintandredesangonis.fr/event/concert-baguenaude/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/2026-AFFICHES-A4-2-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Loto de l’Amicale des anciens élèves de l’école Jeanne d’Arc",
@@ -143,7 +228,12 @@
    "fin": "2026-11-22 20:30:00",
    "journee": false,
    "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
-   "url": "https://saintandredesangonis.fr/event/loto-de-lamicale-des-anciens-eleves-de-lecole-jeanne-darc-4/"
+   "url": "https://saintandredesangonis.fr/event/loto-de-lamicale-des-anciens-eleves-de-lecole-jeanne-darc-4/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2025/08/IMAGES-PORTRAIT-1-1-200x300.jpg",
+    "largeur": 200,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Ateliers jeux à la bibliothèque",
@@ -151,7 +241,12 @@
    "fin": "2026-11-27 18:30:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/ateliers-jeux-a-la-bibliotheque-7/"
+   "url": "https://saintandredesangonis.fr/event/ateliers-jeux-a-la-bibliotheque-7/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/790756347_958277870620272_3328949176693620269_n-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Soirée jeux avec La Sauce",
@@ -159,7 +254,12 @@
    "fin": "2026-11-28 22:30:00",
    "journee": false,
    "lieu": "Salle du 3ème âge (en face de Mozaïka)",
-   "url": "https://saintandredesangonis.fr/event/soiree-jeux-avec-la-sauce-10/"
+   "url": "https://saintandredesangonis.fr/event/soiree-jeux-avec-la-sauce-10/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2023/02/soiree-jeux-287x300.jpeg",
+    "largeur": 287,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Loto de la Boule Dorée Joyeuse",
@@ -167,7 +267,12 @@
    "fin": "2026-11-29 20:30:00",
    "journee": false,
    "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
-   "url": "https://saintandredesangonis.fr/event/loto-de-la-boule-doree-joyeuse-4/"
+   "url": "https://saintandredesangonis.fr/event/loto-de-la-boule-doree-joyeuse-4/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2025/08/IMAGES-PORTRAIT-1-1-200x300.jpg",
+    "largeur": 200,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Repas de la fête",
@@ -175,7 +280,12 @@
    "fin": "2026-12-06 02:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/repas-de-la-fete/"
+   "url": "https://saintandredesangonis.fr/event/repas-de-la-fete/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/2026-PANNEAUX-LEDS-4-232x300.png",
+    "largeur": 232,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Loto de Los Porcs Nègres",
@@ -183,7 +293,12 @@
    "fin": "2026-12-06 20:30:00",
    "journee": false,
    "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
-   "url": "https://saintandredesangonis.fr/event/loto-de-los-porcs-negres-6/"
+   "url": "https://saintandredesangonis.fr/event/loto-de-los-porcs-negres-6/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2025/08/IMAGES-PORTRAIT-1-1-200x300.jpg",
+    "largeur": 200,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Ateliers jeux à la bibliothèque",
@@ -191,7 +306,12 @@
    "fin": "2026-12-11 18:30:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/ateliers-jeux-a-la-bibliotheque-8/"
+   "url": "https://saintandredesangonis.fr/event/ateliers-jeux-a-la-bibliotheque-8/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/790756347_958277870620272_3328949176693620269_n-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Loto de l’Amicale des Retraités Saint-Andréens",
@@ -199,7 +319,12 @@
    "fin": "2026-12-13 20:30:00",
    "journee": false,
    "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
-   "url": "https://saintandredesangonis.fr/event/loto-de-lamicale-des-retraites-saint-andreens-2/"
+   "url": "https://saintandredesangonis.fr/event/loto-de-lamicale-des-retraites-saint-andreens-2/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2025/08/IMAGES-PORTRAIT-1-1-200x300.jpg",
+    "largeur": 200,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Loto de l’Olympique Saint-Andréen",
@@ -207,7 +332,12 @@
    "fin": "2026-12-20 20:30:00",
    "journee": false,
    "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
-   "url": "https://saintandredesangonis.fr/event/loto-de-los-porcs-negres-7/"
+   "url": "https://saintandredesangonis.fr/event/loto-de-los-porcs-negres-7/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2025/08/IMAGES-PORTRAIT-1-1-200x300.jpg",
+    "largeur": 200,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Loto de la Société des Chasseurs et Proriétaires",
@@ -215,7 +345,12 @@
    "fin": "2026-12-27 20:30:00",
    "journee": false,
    "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
-   "url": "https://saintandredesangonis.fr/event/loto-de-la-societe-des-chasseurs-et-prorietaires/"
+   "url": "https://saintandredesangonis.fr/event/loto-de-la-societe-des-chasseurs-et-prorietaires/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2025/08/IMAGES-PORTRAIT-1-1-200x300.jpg",
+    "largeur": 200,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Réveillon 2027",
@@ -223,7 +358,12 @@
    "fin": "2027-01-01 02:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/reveillon-2027/"
+   "url": "https://saintandredesangonis.fr/event/reveillon-2027/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/REVEILLON-ST-SYLVESTRE-31.12.2026-212x300.png",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Concours de Belote",
@@ -231,7 +371,12 @@
    "fin": "2027-01-16 17:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/concours-de-belote-11/"
+   "url": "https://saintandredesangonis.fr/event/concours-de-belote-11/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/BELOTE-2026-2027-212x300.png",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Concert les Darons",
@@ -239,7 +384,12 @@
    "fin": "2027-01-23 21:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/concert-les-darons/"
+   "url": "https://saintandredesangonis.fr/event/concert-les-darons/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/darons-assis-768x512-1-300x200.jpg",
+    "largeur": 300,
+    "hauteur": 200
+   }
   },
   {
    "titre": "Concours de Belote",
@@ -247,7 +397,12 @@
    "fin": "2027-02-27 17:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/concours-de-belote-12/"
+   "url": "https://saintandredesangonis.fr/event/concours-de-belote-12/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/BELOTE-2026-2027-212x300.png",
+    "largeur": 212,
+    "hauteur": 300
+   }
   },
   {
    "titre": "Concours de Belote",
@@ -255,7 +410,12 @@
    "fin": "2027-03-20 17:00:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/concours-de-belote-13/"
+   "url": "https://saintandredesangonis.fr/event/concours-de-belote-13/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/BELOTE-2026-2027-212x300.png",
+    "largeur": 212,
+    "hauteur": 300
+   }
   }
  ]
 }

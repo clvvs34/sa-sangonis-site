@@ -41,8 +41,9 @@ AddDefaultCharset UTF-8
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), interest-cohort=()"
-  # CSP : tout vient du site
-  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
+  # CSP : tout vient du site, sauf les visuels de l'agenda (site de la mairie) et le lecteur vidéo
+  # youtube-nocookie.com, chargé seulement au clic sur « Lire »
+  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data: https://saintandredesangonis.fr; frame-src https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
   # HSTS : à décommenter seulement après plusieurs jours de HTTPS sans problème
   # Header always set Strict-Transport-Security "max-age=31536000"
 </IfModule>

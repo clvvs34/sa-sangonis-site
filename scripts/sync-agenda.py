@@ -4,7 +4,9 @@ vers des fichiers statiques du site :
   - assets/agenda.json (données brutes nettoyées),
   - agenda.html (liste complète, entre <!-- AGENDA:DEBUT --> et <!-- AGENDA:FIN -->),
   - index.html (4 prochains rendez-vous, entre <!-- AGENDA-ACCUEIL:DEBUT --> et <!-- AGENDA-ACCUEIL:FIN -->).
-Aucune image distante. En cas d'échec réseau, ne modifie rien (code 0). Bibliothèque standard uniquement."""
+Visuels : l'URL de la taille « medium » (≈ 212 x 300) de l'image de chaque événement est conservée dans
+agenda.json et affichée directement depuis le site de la mairie (hotlink, loading="lazy") ; aucune image
+n'est copiée sur l'hébergement. Événement sans image : vignette neutre avec la date. En cas d'échec réseau, ne modifie rien (code 0). Bibliothèque standard uniquement."""
 import datetime as dt, html, json, os, re, sys, urllib.parse, urllib.request
 from zoneinfo import ZoneInfo
 
@@ -20,6 +22,16 @@ MOIS = ['janvier','février','mars','avril','mai','juin','juillet','août','sept
 def texte(s):
     s = re.sub(r'<[^>]+>', ' ', s or '')
     return re.sub(r'\s+', ' ', html.unescape(s)).strip()
+
+def visuel(e):
+    """Image de l'événement : taille « medium » si disponible, sinon l'original s'il est petit ; seulement sur le site de la mairie."""
+    im = e.get('image')
+    if not isinstance(im, dict): return None
+    tailles = im.get('sizes') if isinstance(im.get('sizes'), dict) else {}
+    for c in (tailles.get('medium'), im if (im.get('width') or 9999) <= 600 else None, tailles.get('medium_large')):
+        if isinstance(c, dict) and str(c.get('url', '')).startswith(ORIGINE + 'wp-content/') and c.get('width') and c.get('height'):
+            return {'url': c['url'], 'largeur': int(c['width']), 'hauteur': int(c['height'])}
+    return None
 
 def recuperer():
     maintenant = dt.datetime.now(TZ)
@@ -45,7 +57,7 @@ def recuperer():
         ville = texte(v.get('city'))
         if ville and 'sangonis' not in ville.lower() and ville.lower() not in lieu.lower(): lieu = f'{lieu}, {ville}' if lieu else ville
         out.append({'titre': texte(e.get('title')), 'debut': e.get('start_date'), 'fin': e.get('end_date'),
-                    'journee': bool(e.get('all_day')), 'lieu': lieu or None, 'url': url})
+                    'journee': bool(e.get('all_day')), 'lieu': lieu or None, 'url': url, 'image': visuel(e)})
     fin_min = dt.datetime.now(TZ).strftime('%Y-%m-%d %H:%M:%S')
     out = [x for x in out if x['titre'] and x['debut'] and (x['fin'] or x['debut']) >= fin_min]
     out.sort(key=lambda x: x['debut'])
@@ -67,11 +79,20 @@ def item(e, ind):
     a = p(e['debut'])
     lieu = f'\n{ind}    <p class="evt-lieu">{html.escape(e["lieu"])}</p>' if e['lieu'] else ''
     q = quand(e); q = q[0].upper() + q[1:]
+    dt_attr = f"{a:%Y-%m-%d}" + ('' if e['journee'] else format(a, 'T%H:%M'))
+    im = e.get('image')
+    if im:
+        visu = (f'{ind}  <div class="evt-visuel"><img src="{html.escape(im["url"])}" width="{im["largeur"]}" height="{im["hauteur"]}" '
+                f'loading="lazy" decoding="async" alt="Affiche : {html.escape(e["titre"])}"></div>\n')
+    else:
+        visu = (f'{ind}  <div class="evt-visuel evt-visuel--vide" aria-hidden="true"><span class="evt-jour">{a.day}</span>'
+                f'<span class="evt-mois">{MOIS_C[a.month-1]}</span></div>\n')
     return (f'{ind}<li class="evt" data-fin="{html.escape(e["fin"] or e["debut"])}">\n'
-            f'{ind}  <time class="evt-date" datetime="{a:%Y-%m-%d}{'' if e['journee'] else format(a, 'T%H:%M')}"><span class="evt-jour">{a.day}</span><span class="evt-mois">{MOIS_C[a.month-1]}</span></time>\n'
+            f'{visu}'
             f'{ind}  <div class="evt-corps">\n'
-            f'{ind}    <p class="evt-titre"><a href="{html.escape(e["url"])}" rel="noopener">{html.escape(e["titre"])}</a></p>\n'
-            f'{ind}    <p class="evt-quand">{html.escape(q)}</p>{lieu}\n'
+            f'{ind}    <time class="evt-quand" datetime="{dt_attr}">{html.escape(q)}</time>\n'
+            f'{ind}    <p class="evt-titre"><a href="{html.escape(e["url"])}" rel="noopener">{html.escape(e["titre"])}</a></p>{lieu}\n'
+            f'{ind}    <p class="evt-fiche" aria-hidden="true">Voir la fiche</p>\n'
             f'{ind}  </div>\n{ind}</li>')
 
 def liste(evts, ind, vide):

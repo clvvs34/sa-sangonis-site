@@ -18,7 +18,7 @@
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <link rel="preload" href="../assets/fonts/montserrat-latin-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/style.css?v=3">
 </head>
 <body>
 <a class="skip" href="#contenu">Aller au contenu</a>
@@ -32,7 +32,6 @@
     <nav class="nav" id="nav" aria-label="Navigation principale">
       <ul>
         <li><a href="../index.html#groupe">Nos élus</a></li>
-        <li><a href="../index.html#territoire">Notre commune</a></li>
         <li><a href="../index.html#engagements">Nos engagements</a></li>
         <li><a href="../agenda.html">Agenda</a></li>
         <li><a href="../index.html#contact">Contact</a></li>
@@ -54,10 +53,17 @@
   <div class="wrap">
     <article class="seance seance--page">
       <div class="seance-blocs">
-        <div class="seance-bloc">
+        <div class="seance-bloc seance-bloc--video">
           <h2 class="seance-label">Vidéo de la séance</h2>
-          <a class="seance-lien" href="https://www.youtube.com/watch?v=x-FYTIsbNOY" rel="noopener">Regarder sur YouTube</a>
-          <p class="seance-meta">Vidéo publiée par la Ville sur YouTube · 1&nbsp;h&nbsp;11</p>
+          <div class="video">
+            <a class="video-facade" href="https://www.youtube.com/watch?v=x-FYTIsbNOY" data-yt="x-FYTIsbNOY" data-titre="Conseil municipal du 08 avril 2026 - Saint-André-de-Sangonis" rel="noopener" aria-label="Lire la vidéo : Conseil municipal du 08 avril 2026 - Saint-André-de-Sangonis">
+              <span class="video-vignette" aria-hidden="true"><img src="../conseils/vignettes/x-FYTIsbNOY.jpg" width="640" height="480" alt="" decoding="async"></span>
+              <span class="video-bouton" aria-hidden="true"></span>
+              <span class="video-mention" aria-hidden="true">Lire la vidéo</span>
+            </a>
+          </div>
+          <p class="seance-meta">Vidéo publiée par la Ville · 1&nbsp;h&nbsp;11 · <a href="https://www.youtube.com/watch?v=x-FYTIsbNOY" rel="noopener">Voir sur YouTube</a></p>
+          <p class="video-rgpd">Le lecteur YouTube (mode confidentialité renforcée) n’est chargé qu’au clic sur « Lire ».</p>
         </div>
         <div class="seance-bloc">
           <h2 class="seance-label">Documents du conseil</h2>
@@ -69,7 +75,7 @@
       <a class="seance-nav-prec" href="2026-03-28.html"><span class="seance-nav-label">Séance précédente</span>Séance d’installation du conseil municipal du 28 mars 2026</a>
       <a class="seance-nav-suiv" href="2026-04-29.html"><span class="seance-nav-label">Séance suivante</span>Conseil municipal du 29 avril 2026</a>
     </nav>
-    <p class="seances-source"><a href="../conseils-municipaux.html">Toutes les séances</a>. Vidéo publiée par la Ville de Saint-André-de-Sangonis sur <a href="https://www.youtube.com/@villedesaint-andre-de-sang6548" rel="noopener">sa chaîne YouTube</a> ; aucun contenu YouTube n’est chargé sur ce site. Documents officiels : <a href="https://saintandredesangonis.fr/conseil-municipal/">site de la mairie</a>.</p>
+    <p class="seances-source"><a href="../conseils-municipaux.html">Toutes les séances</a>. Vidéo publiée par la Ville de Saint-André-de-Sangonis sur <a href="https://www.youtube.com/@villedesaint-andre-de-sang6548" rel="noopener">sa chaîne YouTube</a>, lue en mode confidentialité renforcée (youtube-nocookie.com) : rien n’est chargé depuis YouTube avant le clic sur « Lire ». Documents officiels : <a href="https://saintandredesangonis.fr/conseil-municipal/">site de la mairie</a>.</p>
   </div>
 </section>
 </main>
@@ -83,6 +89,6 @@
     </ul>
   </div>
 </footer>
-<script src="../assets/main.js"></script>
+<script src="../assets/main.js?v=3"></script>
 </body>
 </html>

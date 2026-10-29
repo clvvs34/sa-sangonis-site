@@ -71,10 +71,10 @@ jobs:
           host="ftp.cluster129.hosting.ovh.net"
           login="sasangw"
 
-          # Suppression idempotente, limitée aux chemins de l'ancienne carte de signalement.
+          # Suppression idempotente, limitée aux chemins retirés du site.
           # Le miroir n'utilise pas --delete : sans ceci, ces fichiers resteraient en ligne.
           purge_signalement_distant() {
-            echo "===== Suppression ciblée des seuls fichiers de signalement ====="
+            echo "===== Suppression ciblée des fichiers retirés du site ====="
             local purge
             purge="$(cat <<EOF
           set sftp:auto-confirm yes
@@ -96,6 +96,11 @@ jobs:
           rm -r -f www/assets/vendor
           rm -r -f www/data
           rm -r -f /home/sasangw/signalements-data
+          rm -f www/assets/tour-horloge-carte-postale.jpg
+          rm -f www/assets/herault-pont-de-gignac-800.jpg
+          rm -f www/assets/herault-pont-de-gignac-1600.jpg
+          rm -f www/assets/herault-pont-de-gignac-800.webp
+          rm -f www/assets/herault-pont-de-gignac-1600.webp
           bye
           EOF
             )"

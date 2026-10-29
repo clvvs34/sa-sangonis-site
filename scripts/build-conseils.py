@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """Génère, à partir de assets/conseils/conseils.json :
-  - conseils/AAAA-MM-JJ.html : une page par séance (vidéo, documents, fil d'Ariane, séances précédente/suivante) ;
+  - conseils/AAAA-MM-JJ.html : une page par séance (lecteur vidéo, documents, fil d'Ariane, séances précédente/suivante) ;
+  - conseils/vignettes/<id>.jpg : copie locale de la vignette officielle de chaque vidéo YouTube (téléchargée une fois) ;
   - conseils-municipaux.html : l'index des séances (entre <!-- SEANCES:DEBUT --> et <!-- SEANCES:FIN -->) ;
   - index.html : l'encart « dernière séance » (entre <!-- ACCUEIL-SEANCES:DEBUT --> et <!-- ACCUEIL-SEANCES:FIN -->) ;
   - sitemap.xml (pages fixes + pages de séance).
+Vidéos : « façade » (vignette locale + bouton lecture ; sans JavaScript, simple lien vers YouTube).
+Le lecteur youtube-nocookie.com n'est chargé qu'au clic (assets/main.js) : rien ne vient de YouTube avant.
 L'en-tête et le pied de page des pages de séance sont repris de conseils-municipaux.html (chemins adaptés).
 Usage : python3 scripts/build-conseils.py   (bibliothèque standard uniquement)"""
-import glob, json, os, re, sys
+import glob, json, os, re, sys, urllib.request
 from html import escape
 
 SITE = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -15,6 +18,8 @@ DEBUT_MANDAT = '2026-03-01'   # rien avant mars 2026
 PAGES_FIXES = ['', 'conseils-municipaux.html', 'agenda.html', 'mentions-legales.html']
 MOIS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre']
 TYPES = {'ordre-du-jour': 'Ordre du jour', 'proces-verbal': 'Procès-verbal'}
+VIGNETTES = 'conseils/vignettes'
+CHAINE = 'https://www.youtube.com/@villedesaint-andre-de-sang6548'
 
 def date_fr(iso):
     y, m, d = (int(x) for x in iso.split('-'))
@@ -32,6 +37,60 @@ def ecrire(rel, contenu):
     os.makedirs(os.path.dirname(p), exist_ok=True)
     open(p, 'w', encoding='utf-8').write(contenu)
 
+# ---------------------------------------------------------------- vidéos
+def video_ok(s):
+    v = s.get('video')
+    return v if isinstance(v, dict) and re.fullmatch(r'[A-Za-z0-9_-]{11}', v.get('id') or '') else None
+
+def vignette(vid_id):
+    """Chemin (relatif au site) de la vignette locale, téléchargée si absente ; None si indisponible (réessai au prochain passage)."""
+    rel = f'{VIGNETTES}/{vid_id}.jpg'
+    p = os.path.join(SITE, rel)
+    if os.path.isfile(p) and os.path.getsize(p) > 2000: return rel
+    for q in ('sddefault', 'hqdefault'):   # 640x480 puis 480x360 ; les bandes noires sont recadrées en CSS (16:9)
+        try:
+            req = urllib.request.Request(f'https://i.ytimg.com/vi/{vid_id}/{q}.jpg',
+                                         headers={'User-Agent': 'sa-sangonis.fr build-conseils (+https://sa-sangonis.fr/)'})
+            with urllib.request.urlopen(req, timeout=20) as r:
+                data = r.read()
+            if len(data) > 2000 and data[:3] == b'\xff\xd8\xff':
+                os.makedirs(os.path.dirname(p), exist_ok=True)
+                open(p, 'wb').write(data); print(f'  + {rel}')
+                return rel
+        except Exception as e:
+            print(f'  (vignette {q} indisponible pour {vid_id} : {e})')
+    return None
+
+def vignette_html(s, prefixe, cls, lazy=True, icone=True):
+    """Vignette 16:9 (image locale + pictogramme lecture), ou bloc neutre si pas de vidéo / vignette indisponible."""
+    v = video_ok(s)
+    rel = vignette(v['id']) if v else None
+    ico = '<span class="lecture-icone" aria-hidden="true"></span>' if icone and v else ''
+    if not rel:
+        txt = '' if v else '<span class="vignette-vide-txt">Pas de vidéo</span>'
+        return f'<span class="{cls} vignette--vide" aria-hidden="true">{txt}{ico}</span>'
+    charge = ' loading="lazy"' if lazy else ''
+    return (f'<span class="{cls}" aria-hidden="true"><img src="{prefixe}{rel}" width="640" height="480" alt=""{charge} decoding="async">{ico}</span>')
+
+def bloc_video(s):
+    v = video_ok(s)
+    if not v:
+        return ('<div class="video-absente"><p>Pas de vidéo publiée pour cette séance.</p>'
+                f'<p class="seance-meta">Les vidéos des séances sont publiées par la Ville sur <a href="{CHAINE}" rel="noopener">sa chaîne YouTube</a>.</p></div>')
+    vid, yt = v['id'], f'https://www.youtube.com/watch?v={v["id"]}'
+    titre = v.get('titre') or nom_seance(s)
+    duree = f" · {escape(v['duree']).replace(' ', '&nbsp;')}" if v.get('duree') else ''
+    return (f'<div class="video">\n'
+            f'            <a class="video-facade" href="{yt}" data-yt="{vid}" data-titre="{escape(titre)}" rel="noopener" aria-label="Lire la vidéo : {escape(titre)}">\n'
+            f'              {vignette_html(s, "../", "video-vignette", lazy=False, icone=False)}\n'
+            f'              <span class="video-bouton" aria-hidden="true"></span>\n'
+            f'              <span class="video-mention" aria-hidden="true">Lire la vidéo</span>\n'
+            f'            </a>\n'
+            f'          </div>\n'
+            f'          <p class="seance-meta">Vidéo publiée par la Ville{duree} · <a href="{yt}" rel="noopener">Voir sur YouTube</a></p>\n'
+            f'          <p class="video-rgpd">Le lecteur YouTube (mode confidentialité renforcée) n’est chargé qu’au clic sur « Lire ».</p>')
+
+# ---------------------------------------------------------------- documents
 def documents(s):
     """Documents publiables de la séance (fichier présent), ordre du jour puis procès-verbal."""
     out = []
@@ -45,7 +104,7 @@ def documents(s):
 
 def resume(s):
     """Indications courtes : « Vidéo · Ordre du jour · Procès-verbal en attente »."""
-    r = ['Vidéo'] if s.get('video') else []
+    r = ['Vidéo'] if video_ok(s) else []
     r += [TYPES[d['type']] for d in documents(s)]
     if s.get('pv_en_attente') and not any(d['type'] == 'proces-verbal' for d in documents(s)):
         r.append('Procès-verbal en attente')
@@ -62,7 +121,6 @@ def gabarit():
     pied = src[src.index('</main>'):]
     def prefixer(h):
         return re.sub(r'(href|src)="(?!https?:|mailto:|#|/|\.\./)([^"]*)"', r'\1="../\2"', h)
-    pied = re.sub(r'\s*<script src="[^"]*"></script>', '', pied).replace('</body>', '<script src="assets/main.js"></script>\n</body>')
     return prefixer(head), prefixer(corps), prefixer(pied)
 
 def page_seance(s, prec, suiv, gab):
@@ -77,14 +135,7 @@ def page_seance(s, prec, suiv, gab):
     h = re.sub(r'<meta property="og:title" content="[^"]*">', f'<meta property="og:title" content="{escape(nom)}">', h)
     h = re.sub(r'<meta property="og:description" content="[^"]*">', f'<meta property="og:description" content="{escape(desc)}">', h)
 
-    vid = s.get('video')
-    if vid:
-        assert re.fullmatch(r'[A-Za-z0-9_-]{11}', vid['id'])
-        meta = 'Vidéo publiée par la Ville sur YouTube' + (f" · {escape(vid['duree']).replace(' ', '&nbsp;')}" if vid.get('duree') else '')
-        video = (f'<a class="seance-lien" href="https://www.youtube.com/watch?v={vid["id"]}" rel="noopener">Regarder sur YouTube</a>\n'
-                 f'          <p class="seance-meta">{meta}</p>')
-    else:
-        video = '<p class="seance-vide">Pas de vidéo publiée pour cette séance.</p>'
+    video = bloc_video(s)
     lignes = [f'<li><a href="../{escape(d["fichier"])}">{TYPES[d["type"]]}</a> <span class="doc-meta">(PDF, {taille(os.path.join(SITE, d["fichier"]))})</span></li>'
               for d in documents(s)]
     if s.get('pv_en_attente') and not any(d['type'] == 'proces-verbal' for d in documents(s)):
@@ -107,9 +158,9 @@ def page_seance(s, prec, suiv, gab):
 
 <section class="seances-section" aria-label="Vidéo et documents de la séance">
   <div class="wrap">
-    <article class="seance seance--page">
+    <article class="seance seance--page{'' if video_ok(s) else ' seance--sans-video'}">
       <div class="seance-blocs">
-        <div class="seance-bloc">
+        <div class="seance-bloc seance-bloc--video">
           <h2 class="seance-label">Vidéo de la séance</h2>
           {video}
         </div>
@@ -123,7 +174,7 @@ def page_seance(s, prec, suiv, gab):
       {lien(prec, "prec")}
       {lien(suiv, "suiv")}
     </nav>
-    <p class="seances-source"><a href="../conseils-municipaux.html">Toutes les séances</a>. Vidéo publiée par la Ville de Saint-André-de-Sangonis sur <a href="https://www.youtube.com/@villedesaint-andre-de-sang6548" rel="noopener">sa chaîne YouTube</a> ; aucun contenu YouTube n’est chargé sur ce site. Documents officiels : <a href="https://saintandredesangonis.fr/conseil-municipal/">site de la mairie</a>.</p>
+    <p class="seances-source"><a href="../conseils-municipaux.html">Toutes les séances</a>. Vidéo publiée par la Ville de Saint-André-de-Sangonis sur <a href="{CHAINE}" rel="noopener">sa chaîne YouTube</a>, lue en mode confidentialité renforcée (youtube-nocookie.com) : rien n’est chargé depuis YouTube avant le clic sur « Lire ». Documents officiels : <a href="https://saintandredesangonis.fr/conseil-municipal/">site de la mairie</a>.</p>
   </div>
 </section>
 '''
@@ -145,14 +196,17 @@ def index_html(seances):
             blocs.append(f'    <h3 class="seances-annee">{y}</h3>\n    <ol class="seances-liste">'); annee = y
         objet = f'<span class="seance-ligne-objet">{escape(s["sous_titre"])}</span>' if s.get('sous_titre') else ''
         blocs.append(f'      <li><a class="seance-ligne" href="conseils/{s["date"]}.html">'
-                     f'<time datetime="{s["date"]}">{date_fr(s["date"])}</time>'
+                     f'{vignette_html(s, "", "seance-ligne-vignette")}'
+                     f'<span class="seance-ligne-texte"><time datetime="{s["date"]}">{date_fr(s["date"])}</time>'
                      f'<span class="seance-ligne-titre">{escape(s["titre"])}</span>{objet}'
-                     f'<span class="seance-ligne-resume">{resume(s)}</span></a></li>')
+                     f'<span class="seance-ligne-resume">{resume(s)}</span></span></a></li>')
     if annee: blocs.append('    </ol>')
     return '\n'.join(blocs)
 
 def accueil_html(s):
-    return (f'        <p class="teaser-conseil-label">Dernière séance</p>\n'
+    return (f'        <a class="teaser-conseil-video" href="conseils/{s["date"]}.html" tabindex="-1" aria-hidden="true">'
+            f'{vignette_html(s, "", "teaser-conseil-vignette")}</a>\n'
+            f'        <p class="teaser-conseil-label">Dernière séance</p>\n'
             f'        <p class="teaser-conseil-titre"><a href="conseils/{s["date"]}.html">{escape(nom_seance(s))}</a></p>\n'
             f'        <p class="teaser-conseil-resume">{resume(s)}</p>')
 
@@ -177,6 +231,10 @@ def main():
         rel = os.path.relpath(f, SITE)
         if re.fullmatch(r'conseils/\d{4}-\d{2}-\d{2}\.html', rel) and rel not in attendues:
             os.remove(f); print(f'  - {rel} supprimée')
+    ids = {video_ok(s)['id'] for s in seances if video_ok(s)}
+    for f in glob.glob(os.path.join(SITE, VIGNETTES, '*.jpg')):     # vignettes devenues inutiles
+        if os.path.basename(f)[:-4] not in ids:
+            os.remove(f); print(f'  - {os.path.relpath(f, SITE)} supprimée')
     remplacer('conseils-municipaux.html', 'SEANCES', index_html(seances))
     if seances: remplacer('index.html', 'ACCUEIL-SEANCES', accueil_html(seances[0]))
     ecrire('sitemap.xml', sitemap(seances))

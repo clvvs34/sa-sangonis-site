@@ -101,19 +101,7 @@ section{padding:clamp(3rem,7vw,5.5rem) 0}
 .engagements p{margin:0;font-size:.95rem}
 .encadre{border:1px solid var(--gris-bord);padding:1.4rem 1.6rem;background:#fff;margin-top:1.5rem}
 
-/* Territoire */
-.chiffres{list-style:none;margin:0 0 2.4rem;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem}
-.chiffres li{background:var(--anthracite);color:#fff;padding:1.2rem 1.3rem}
-.chiffres strong{display:block;font-family:var(--affiche);font-weight:800;font-size:1.75rem;color:var(--sable);line-height:1.15}
-.chiffres span{font-size:.85rem;color:#e4e1dd}
 figure{margin:0}
-figure img{width:100%;object-fit:cover;aspect-ratio:4/5;box-shadow:0 2px 14px rgba(0,0,0,.12)}
-figcaption{font-size:.78rem;color:var(--gris-texte);margin-top:.6rem;line-height:1.5}
-.reperes{list-style:none;margin:0 0 1.5rem;padding:0}
-.reperes li{position:relative;padding:0 0 .9rem 1.4rem}
-.reperes li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;border-radius:50%;background:var(--rouge)}
-.reperes b{font-weight:700}
-.sources{font-size:.8rem;color:var(--gris-texte)}
 
 /* Actualités */
 .actu time{display:block;font-size:.85rem;font-weight:700;color:var(--rouge);margin-bottom:.3rem}
@@ -150,11 +138,6 @@ figcaption{font-size:.78rem;color:var(--gris-texte);margin-top:.6rem;line-height
 @media (max-width:560px){.legal dl{grid-template-columns:1fr}.legal dd{margin-bottom:.6rem}}
 
 /* Paysage : grande photo + texte */
-.paysage{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:2rem;align-items:center;margin-top:3rem;background:var(--creme);padding:1.5rem}
-.paysage-photo img{aspect-ratio:3/2;width:100%;object-fit:cover}
-.paysage-texte{padding:.5rem 1rem .5rem 0}
-.paysage-texte h3{font-size:1.35rem}
-@media (max-width:900px){.paysage{grid-template-columns:1fr;padding:1rem}.paysage-texte{padding:0}}
 
 .actu-intro{align-items:center}
 
@@ -200,32 +183,67 @@ figcaption{font-size:.78rem;color:var(--gris-texte);margin-top:.6rem;line-height
 /* ------------------------------------------------------------------ */
 .agenda-section{padding-top:2rem}
 .evt-mois-titre{font-family:var(--affiche);font-size:1.35rem;color:var(--rouge);margin:1.6rem 0 .8rem}
-.evts{list-style:none;margin:0;padding:0;display:grid;gap:.8rem;grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
-.evt{display:flex;gap:1rem;align-items:flex-start;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:.9rem 1rem}
-.evt[hidden]{display:none}
-.evt-date{flex:none;width:3.6rem;text-align:center;background:var(--anthracite);color:#fff;padding:.4rem 0 .45rem;line-height:1.1}
-.evt-jour{display:block;font-family:var(--affiche);font-weight:800;font-size:1.45rem;color:var(--sable)}
-.evt-mois{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
-.evt-corps{min-width:0}
-.evt-corps p{margin:0}
-.evt-titre{font-weight:700;line-height:1.35;margin-bottom:.2rem!important;overflow-wrap:anywhere}
-.evt-titre a{text-decoration:none}
-.evt-titre a:hover{text-decoration:underline}
-.evt-quand{font-size:.85rem}
-.evt-lieu{font-size:.82rem;color:var(--gris-texte)}
 .evt-vide{color:var(--gris-texte);font-style:italic}
 .agenda-suite{margin:1.6rem 0 0}
+/* Cartes d'événements avec le visuel publié par la mairie */
+.evts{list-style:none;margin:0;padding:0;display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
+@media (max-width:420px){.evts{grid-template-columns:1fr}}
+.evt{position:relative;display:flex;gap:1rem;align-items:stretch;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:.75rem;transition:box-shadow .12s}
+.evt:hover{box-shadow:0 4px 18px rgba(0,0,0,.16)}
+.evt:focus-within{outline:3px solid var(--sable);outline-offset:2px}
+.evt[hidden]{display:none}
+.evt-visuel{flex:none;width:96px;aspect-ratio:212/300;background:var(--gris-fond);overflow:hidden;align-self:flex-start}
+.evt-visuel img{width:100%;height:100%;object-fit:contain}
+.evt-visuel--vide{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--anthracite);color:#fff;line-height:1.1}
+@media (min-width:700px){.evt-visuel{width:108px}}
+.evt-jour{display:block;font-family:var(--affiche);font-weight:800;font-size:2rem;color:var(--sable)}
+.evt-mois{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+.evt-corps{min-width:0;display:flex;flex-direction:column;gap:.2rem;padding:.15rem 0}
+.evt-corps p{margin:0}
+.evt-quand{display:block;font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--rouge);line-height:1.4}
+.evt-titre{font-family:var(--affiche);font-weight:800;font-size:1.02rem;line-height:1.3;overflow-wrap:anywhere}
+.evt-titre a{text-decoration:none}
+.evt-titre a::after{content:"";position:absolute;inset:0}
+.evt-titre a:focus-visible{outline:none}
+.evt:hover .evt-titre a{text-decoration:underline}
+.evt-lieu{font-size:.82rem;color:var(--gris-texte);line-height:1.4}
+.evt-fiche{margin-top:auto!important;padding-top:.35rem;font-size:.76rem;color:var(--gris-texte)}
+.evt-fiche::after{content:" ›";color:var(--rouge);font-weight:800}
+.evt-vide{color:var(--gris-texte);font-style:italic}
+.agenda-credit{font-size:.78rem;color:var(--gris-texte);margin:1rem 0 0}
 
 /* Conseils : index, pages de séance, encart d'accueil */
-.seances-liste{list-style:none;margin:0;padding:0;display:grid;gap:.7rem}
-.seance-ligne{display:grid;grid-template-columns:11.5rem 1fr auto;gap:.2rem 1.2rem;align-items:baseline;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid var(--rouge);padding:.95rem 1.2rem;text-decoration:none;color:var(--anthracite);transition:background-color .12s}
+.seances-liste{list-style:none;margin:0;padding:0;display:grid;gap:.8rem}
+.seance-ligne{display:flex;gap:1rem;align-items:center;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08);border-left:5px solid var(--rouge);padding:.7rem 1rem .7rem .7rem;text-decoration:none;color:var(--anthracite);transition:background-color .12s}
 .seance-ligne:hover,.seance-ligne:focus-visible{background:var(--creme)}
-.seance-ligne time{font-family:var(--affiche);font-weight:800;font-size:1.12rem}
-.seance-ligne-titre{font-weight:600}
-.seance-ligne-objet{grid-column:2;font-size:.85rem;color:var(--gris-texte)}
-.seance-ligne-resume{grid-column:3;grid-row:1;font-size:.8rem;color:var(--gris-texte);white-space:nowrap}
+.seance-ligne-vignette{flex:none;width:7.5rem}
+@media (min-width:760px){.seance-ligne-vignette{width:11rem}}
+.seance-ligne-texte{display:flex;flex-direction:column;min-width:0;line-height:1.4}
+.seance-ligne time{font-family:var(--affiche);font-weight:800;font-size:1.08rem;line-height:1.25}
+.seance-ligne-titre{font-weight:600;font-size:.92rem}
+.seance-ligne-objet{font-size:.82rem;color:var(--gris-texte)}
+.seance-ligne-resume{font-size:.78rem;color:var(--gris-texte);margin-top:.2rem}
 .seance-ligne-resume::after{content:" ›";color:var(--rouge);font-weight:800;font-size:1rem}
-@media (max-width:760px){.seance-ligne{grid-template-columns:1fr;padding:.85rem 1rem}.seance-ligne-objet,.seance-ligne-resume{grid-column:1;grid-row:auto;white-space:normal}}
+/* Vignettes vidéo 16:9 (index, accueil) : bandes noires de la vignette YouTube recadrées */
+.seance-ligne-vignette,.teaser-conseil-vignette,.video-vignette{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:var(--anthracite)}
+.seance-ligne-vignette img,.teaser-conseil-vignette img,.video-vignette img{width:100%;height:100%;object-fit:cover}
+.vignette--vide{display:flex;align-items:center;justify-content:center;background:var(--gris-fond);border:1px solid var(--gris-ligne)}
+.vignette-vide-txt{font-size:.72rem;font-weight:600;color:var(--gris-texte);text-transform:uppercase;letter-spacing:.05em}
+.lecture-icone{position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:rgba(46,45,44,.82) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M4 2.2v9.6l8-4.8z' fill='%23ead9a5'/%3E%3C/svg%3E") no-repeat 56% 50%/45%}
+.teaser-conseil-vignette .lecture-icone{width:54px;height:54px;margin:-27px 0 0 -27px}
+/* Lecteur vidéo des pages de séance : façade cliquable, puis iframe youtube-nocookie */
+.video{position:relative;aspect-ratio:16/9;background:#1d1c1b;overflow:hidden}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-facade{position:absolute;inset:0;display:block;color:#fff;text-decoration:none;cursor:pointer}
+.video-facade .video-vignette{position:absolute;inset:0;aspect-ratio:auto}
+.video-facade::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.55))}
+.video-bouton{position:absolute;left:50%;top:50%;width:76px;height:54px;margin:-27px 0 0 -38px;background:var(--rouge) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M4 2.2v9.6l8-4.8z' fill='%23fff'/%3E%3C/svg%3E") no-repeat 54% 50%/36%;z-index:1;transition:background-color .12s,transform .12s}
+.video-facade:hover .video-bouton,.video-facade:focus-visible .video-bouton{background-color:var(--anthracite);transform:scale(1.06)}
+.video-mention{position:absolute;left:.9rem;bottom:.7rem;z-index:1;font-family:var(--affiche);font-weight:800;font-size:.9rem;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.video-rgpd{font-size:.74rem;color:var(--gris-texte);margin:.2rem 0 0;line-height:1.45}
+.video-absente{background:var(--gris-fond);border:1px dashed var(--gris-bord);padding:1.4rem 1.3rem}
+.video-absente p{margin:0;font-style:italic;color:var(--gris-texte)}
+.video-absente p.seance-meta{font-style:normal;margin-top:.4rem}
 .ariane ol{list-style:none;margin:0 0 1rem;padding:0;display:flex;flex-wrap:wrap;gap:.2rem .5rem;font-size:.82rem;color:#d6d3cf}
 .ariane li+li::before{content:"›";margin-right:.5rem;color:var(--sable)}
 .ariane a{color:#fff}
@@ -251,4 +269,10 @@ h2.seance-label{font-family:var(--texte)}
 .teaser-conseil-titre{font-family:var(--affiche);font-weight:800;font-size:1.2rem;line-height:1.3;margin:.3rem 0 .2rem!important}
 .teaser-conseil-titre a{text-decoration:none}
 .teaser-conseil-titre a:hover{text-decoration:underline}
+.teaser-conseil-video{display:block;margin:-1.4rem -1.5rem 1rem}
 .teaser-conseil-resume{font-size:.85rem;color:var(--gris-texte);margin-bottom:1.1rem!important}
+
+.seance--page .seance-blocs{grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:1.4rem 2rem}
+.seance--page.seance--sans-video .seance-blocs{grid-template-columns:1fr 1fr}
+@media (max-width:860px){.seance--page .seance-blocs,.seance--page.seance--sans-video .seance-blocs{grid-template-columns:1fr}}
+@media (max-width:600px){.seance--page{padding:1rem}}
