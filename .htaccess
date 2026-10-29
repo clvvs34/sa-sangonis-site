@@ -40,7 +40,10 @@ AddDefaultCharset UTF-8
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
-  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), interest-cohort=()"
+  # geolocation et camera autorisées pour ce site seulement (page « Signaler un problème »)
+  Header always set Permissions-Policy "geolocation=(self), camera=(self), microphone=(), interest-cohort=()"
+  # CSP : tout vient du site, sauf les tuiles de carte OpenStreetMap
+  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data: blob: https://tile.openstreetmap.org; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
   # HSTS : à décommenter seulement après plusieurs jours de HTTPS sans problème
   # Header always set Strict-Transport-Security "max-age=31536000"
 </IfModule>
@@ -80,4 +83,10 @@ AddDefaultCharset UTF-8
 # Ne pas servir les fichiers cachés (sauf .well-known pour Let's Encrypt)
 <IfModule mod_rewrite.c>
   RewriteRule "(^|/)\.(?!well-known/)" - [F]
+</IfModule>
+
+# Signalements : données et code interne jamais servis directement.
+# (Les données sont normalement hors de www ; www/data n’est qu’un repli.)
+<IfModule mod_rewrite.c>
+  RewriteRule ^(data|api/inc)(/|$) - [F,L]
 </IfModule>
