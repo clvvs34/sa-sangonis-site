@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Loisirs en famille",
-   "debut": "2026-10-29 14:30:00",
-   "fin": "2026-10-29 16:30:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/loisirs-en-famille-12/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/AUTOMNE-2026-PROGRAMME-212x300.jpg",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Exposition photo",
    "debut": "2026-10-30 00:00:00",
    "fin": "2026-11-01 23:59:59",
