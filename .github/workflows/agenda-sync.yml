@@ -47,7 +47,7 @@ jobs:
         run: |
           git config user.name  "sa-sangonis-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add agenda.html index.html conseils-municipaux.html assets/agenda.json assets/conseils/conseils.json
+          git add -A agenda.html index.html conseils-municipaux.html conseils/ sitemap.xml assets/agenda.json assets/conseils/conseils.json
           if git diff --cached --quiet; then
             echo "Aucun changement."
             echo "changed=false" >> "$GITHUB_OUTPUT"
