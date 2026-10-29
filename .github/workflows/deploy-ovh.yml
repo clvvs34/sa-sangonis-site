@@ -53,6 +53,18 @@ jobs:
             exit 0
           fi
 
+          # Un secret collé dans GitHub a souvent un saut de ligne final, que sshd refuse.
+          secret_had_trailing_break=no
+          eval "$(python3 - << 'PY'
+          import os, shlex
+          raw = os.environ.get("OVH_FTP_PASSWORD", "")
+          cleaned = raw.replace("\ufeff", "").rstrip("\r\n")
+          flag = "yes" if cleaned != raw.replace("\ufeff", "") else "no"
+          print("secret_had_trailing_break=" + flag)
+          print("OVH_FTP_PASSWORD=" + shlex.quote(cleaned))
+          PY
+          )"
+          echo "secret_had_trailing_break=${secret_had_trailing_break}"
           export LFTP_PASSWORD="${OVH_FTP_PASSWORD}"
           export SSHPASS="${OVH_FTP_PASSWORD}"
           export DEBIAN_FRONTEND=noninteractive
@@ -117,27 +129,39 @@ jobs:
             echo "ls -la www/assets"
           } > "${batch}"
 
-          echo "===== Étape 1 : OpenSSH sftp (batch, sshpass) ====="
           echo "----- batch.txt -----"
           cat "${batch}"
-          set +e
           # sftp -b ajoute -oBatchMode=yes après les options. OpenSSH garde la
           # première valeur : -oBatchMode=no doit précéder, sinon le mot de passe
-          # n'est jamais demandé et l'authentification échoue.
-          timeout --kill-after=10s 120s \
-            sshpass -e sftp \
-              -oBatchMode=no \
-              -oStrictHostKeyChecking=accept-new \
-              -oPubkeyAuthentication=no \
-              -oPreferredAuthentications=password,keyboard-interactive \
-              -P 22 \
-              -b "${batch}" \
-              "${login}@${host}" 2>&1 | redact_stream
-          step1_status="${PIPESTATUS[0]}"
-          set -e
-          echo "Code étape 1 : ${step1_status}"
-          if [ "${step1_status}" -eq 0 ]; then
+          # n'est jamais demandé.
+          run_openssh_sftp() {
+            local auth="$1"
+            local label="$2"
+            echo "===== ${label} : OpenSSH sftp (auth=${auth}) ====="
+            set +e
+            timeout --kill-after=10s 90s \
+              sshpass -v -e sftp -v \
+                -oBatchMode=no \
+                -oStrictHostKeyChecking=accept-new \
+                -oPubkeyAuthentication=no \
+                -oPreferredAuthentications="${auth}" \
+                -oNumberOfPasswordPrompts=1 \
+                -P 22 \
+                -b "${batch}" \
+                "${login}@${host}" 2>&1 | redact_stream
+            local status="${PIPESTATUS[0]}"
+            set -e
+            echo "Code ${label} : ${status}"
+            return "${status}"
+          }
+          if run_openssh_sftp "password,keyboard-interactive" "Étape 1"; then
             echo "Protocole retenu : OpenSSH sftp batch"
+            rm -f "${batch}"
+            exit 0
+          fi
+          echo "Étape 1 refusée. Nouvel essai en keyboard-interactive."
+          if run_openssh_sftp "keyboard-interactive" "Étape 1b"; then
+            echo "Protocole retenu : OpenSSH sftp batch (keyboard-interactive)"
             rm -f "${batch}"
             exit 0
           fi
