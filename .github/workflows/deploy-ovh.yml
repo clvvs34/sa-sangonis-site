@@ -101,6 +101,7 @@ jobs:
           rm -f www/assets/herault-pont-de-gignac-1600.jpg
           rm -f www/assets/herault-pont-de-gignac-800.webp
           rm -f www/assets/herault-pont-de-gignac-1600.webp
+          rm -f www/assets/eglise-saint-andre.jpg
           bye
           EOF
             )"
