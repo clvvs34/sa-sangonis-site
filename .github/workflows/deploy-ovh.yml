@@ -71,6 +71,43 @@ jobs:
           host="ftp.cluster129.hosting.ovh.net"
           login="sasangw"
 
+          # Suppression idempotente, limitée aux chemins de l'ancienne carte de signalement.
+          # Le miroir n'utilise pas --delete : sans ceci, ces fichiers resteraient en ligne.
+          purge_signalement_distant() {
+            echo "===== Suppression ciblée des seuls fichiers de signalement ====="
+            local purge
+            purge="$(cat <<EOF
+          set sftp:auto-confirm yes
+          set sftp:connect-program "ssh -a -x -oStrictHostKeyChecking=accept-new"
+          set net:timeout 40
+          set dns:order "inet inet6"
+          set cmd:fail-exit yes
+          set log:enabled/xfer no
+          set bmk:save-passwords no
+          open --env-password --user ${login} sftp://${host}:22
+          pwd
+          set cmd:fail-exit no
+          rm -f www/signaler.html
+          rm -f www/assets/signaler.js
+          rm -f www/assets/moderation.js
+          rm -f www/assets/commune-contour.js
+          rm -r -f www/api
+          rm -r -f www/moderation
+          rm -r -f www/assets/vendor
+          rm -r -f www/data
+          rm -r -f /home/sasangw/signalements-data
+          bye
+          EOF
+            )"
+            purge="$(printf '%s\n' "${purge}" | sed 's/^[[:space:]]*//')"
+            set +e
+            timeout --kill-after=10s 90s lftp -c "${purge}" 2>&1 | redact_stream
+            local status="${PIPESTATUS[0]}"
+            set -e
+            echo "Code suppression ciblée : ${status}"
+            return "${status}"
+          }
+
           # Retire le secret de toute sortie avant qu'elle n'atteigne le journal.
           # Lecture au fil de l'eau : un filtre qui attend la fin du flux bloque lftp en debug.
           cat > /tmp/redact-stream.py << 'PY'
@@ -154,6 +191,7 @@ jobs:
           if run_openssh_sftp "password" "Étape 1"; then
             echo "Protocole retenu : OpenSSH sftp batch"
             rm -f "${batch}"
+            purge_signalement_distant || exit 1
             exit 0
           fi
           echo "Étape 1 échouée. Passage à lftp sftp."
@@ -191,6 +229,7 @@ jobs:
           if [ "${step2_status}" -eq 0 ]; then
             echo "Protocole retenu : lftp sftp"
             rm -f "${batch}"
+            purge_signalement_distant || exit 1
             exit 0
           fi
           echo "Étape 2 échouée. Dernier recours : FTP explicite TLS (délai court)."
@@ -240,6 +279,7 @@ jobs:
             exit "${step3_status}"
           fi
           echo "Protocole retenu : FTP port 21 (explicit TLS)"
+          purge_signalement_distant || exit 1
 
       - name: Verify public URLs
         if: steps.gate.outputs.skip != 'true'

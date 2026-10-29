@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-Disallow: /moderation/
-Disallow: /api/
 Sitemap: https://sa-sangonis.fr/sitemap.xml
