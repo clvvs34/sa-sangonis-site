@@ -119,14 +119,14 @@
    }
   },
   {
-   "titre": "Ateliers jeux à la bibliothèque",
-   "debut": "2026-11-13 17:00:00",
-   "fin": "2026-11-13 18:30:00",
+   "titre": "Commémoration du 11 novembre",
+   "debut": "2026-11-11 10:15:00",
+   "fin": "2026-11-11 12:30:00",
    "journee": false,
    "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/ateliers-jeux-a-la-bibliotheque-6/",
+   "url": "https://saintandredesangonis.fr/event/commemoration-du-11-novembre/",
    "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/790756347_958277870620272_3328949176693620269_n-212x300.jpg",
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/2026-AFFICHES-A4-212x300.jpg",
     "largeur": 212,
     "hauteur": 300
    }
