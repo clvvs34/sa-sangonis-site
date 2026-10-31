@@ -2,32 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Exposition photo",
-   "debut": "2026-10-30 00:00:00",
-   "fin": "2026-11-01 23:59:59",
-   "journee": true,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/exposition-photo/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/5162acf3-c988-4a1a-bfd4-43cccc6e20fe-212x300.png",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
-   "titre": "Halloween – Fête Foraine Hantée",
-   "debut": "2026-10-30 19:30:00",
-   "fin": "2026-10-30 23:00:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/halloween-fete-foraine-hantee/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/HALLOWEEN-ADULTE-2026-212x300.jpg",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Loto",
    "debut": "2026-11-01 17:00:00",
    "fin": "2026-11-01 19:30:00",
