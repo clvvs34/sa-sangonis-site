@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Loto",
-   "debut": "2026-11-01 17:00:00",
-   "fin": "2026-11-01 19:30:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/loto-24/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/dce171ed-fc5f-4277-94b6-ac87a323f697-200x300.jpeg",
-    "largeur": 200,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Rencontre du groupe « lecture »",
    "debut": "2026-11-06 18:00:00",
    "fin": "2026-11-06 19:30:00",
