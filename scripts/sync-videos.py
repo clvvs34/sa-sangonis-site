@@ -95,7 +95,9 @@ def main():
         except Exception as e:
             erreurs += 1; print(f'  source indisponible : {e}', file=sys.stderr)
     if not trouvees:
-        print('Aucune vidéo récupérée (YouTube indisponible ?) : rien à faire.'); return
+        print('Aucune vidéo récupérée (YouTube indisponible ?) : les pages sont tout de même régénérées.')
+        subprocess.run([sys.executable, os.path.join(SITE, 'scripts/build-conseils.py')], check=True)
+        return
 
     data = json.load(open(JSON, encoding='utf-8'))
     seances = {s['date']: s for s in data['seances']}
@@ -115,7 +117,7 @@ def main():
                  'video': video, 'documents': []}
             data['seances'].append(s); seances[date] = s
         elif not s.get('video'):
-            s['video'] = video
+            s['video'] = video   # séance déjà annoncée (y compris à venir) : le direct ou la rediffusion s'y rattache
         else:
             continue   # une vidéo est déjà associée à cette séance : on ne la remplace pas
         ajouts += 1; print(f'  + {date} : {titre} ({vid})')

@@ -271,6 +271,10 @@ h2.seance-label{font-family:var(--texte)}
 .teaser-conseil-titre a:hover{text-decoration:underline}
 .teaser-conseil-video{display:block;margin:-1.4rem -1.5rem 1rem}
 .teaser-conseil-resume{font-size:.85rem;color:var(--gris-texte);margin-bottom:1.1rem!important}
+.teaser-conseil-quand{font-size:.95rem;margin:.35rem 0 .5rem!important}
+.teaser-conseil-note{font-size:.85rem;color:var(--gris-texte);margin:0 0 .7rem!important}
+.teaser-conseil-passe{font-size:.82rem;margin:0 0 1rem!important}
+.seance-ligne-avenir{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rouge)}
 
 .seance--page .seance-blocs{grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:1.4rem 2rem}
 .seance--page.seance--sans-video .seance-blocs{grid-template-columns:1fr 1fr}

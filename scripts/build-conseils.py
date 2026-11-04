@@ -9,21 +9,49 @@ Vidéos : « façade » (vignette locale + bouton lecture ; sans JavaScript, sim
 Le lecteur youtube-nocookie.com n'est chargé qu'au clic (assets/main.js) : rien ne vient de YouTube avant.
 L'en-tête et le pied de page des pages de séance sont repris de conseils-municipaux.html (chemins adaptés).
 Usage : python3 scripts/build-conseils.py   (bibliothèque standard uniquement)"""
-import glob, json, os, re, sys, urllib.request
+import datetime, glob, json, os, re, sys, urllib.request
 from html import escape
+from zoneinfo import ZoneInfo
 
 SITE = sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 URL = 'https://sa-sangonis.fr/'
 DEBUT_MANDAT = '2026-03-01'   # rien avant mars 2026
 PAGES_FIXES = ['', 'conseils-municipaux.html', 'agenda.html', 'mentions-legales.html']
 MOIS = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre']
+JOURS = ['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche']
 TYPES = {'ordre-du-jour': 'Ordre du jour', 'proces-verbal': 'Procès-verbal'}
 VIGNETTES = 'conseils/vignettes'
 CHAINE = 'https://www.youtube.com/@villedesaint-andre-de-sang6548'
+DIRECT = CHAINE + '/streams'
+TZ = ZoneInfo('Europe/Paris')
 
 def date_fr(iso):
     y, m, d = (int(x) for x in iso.split('-'))
     return f"{d}{'er' if d == 1 else ''} {MOIS[m-1]} {y}"
+
+def aujourdhui():
+    return datetime.datetime.now(TZ).date().isoformat()
+
+def a_venir(s):
+    """Séance du jour ou à venir, sans vidéo : annonce, pas « dernière séance »."""
+    return s['date'] >= aujourdhui() and not video_ok(s)
+
+def heure_fr(h):
+    hh, mm = h.split(':')
+    return f'{int(hh)} h' + ('' if mm == '00' else f' {int(mm):02d}')
+
+def ligne_quand(s):
+    """« Jeudi 5 novembre 2026 à 18 h 30 · Salle du conseil municipal, Cours de la Place »."""
+    y, m, d = (int(x) for x in s['date'].split('-'))
+    jour = JOURS[datetime.date(y, m, d).weekday()].capitalize()
+    texte = f'{jour} {date_fr(s["date"])}'
+    if s.get('heure'): texte += ' à ' + heure_fr(s['heure'])
+    if s.get('lieu'): texte += ' · ' + s['lieu']
+    return texte
+
+def note_direct():
+    return ('Séance publique, retransmise en direct sur la '
+            f'<a href="{DIRECT}" rel="noopener">chaîne YouTube de la Ville</a>')
 
 def taille(path):
     n = os.path.getsize(path)
@@ -64,6 +92,8 @@ def vignette(vid_id):
 def vignette_html(s, prefixe, cls, lazy=True, icone=True):
     """Vignette 16:9 (image locale + pictogramme lecture), ou bloc neutre si pas de vidéo / vignette indisponible."""
     v = video_ok(s)
+    if a_venir(s):
+        return f'<span class="{cls} vignette--vide" aria-hidden="true"></span>'
     rel = vignette(v['id']) if v else None
     ico = '<span class="lecture-icone" aria-hidden="true"></span>' if icone and v else ''
     if not rel:
@@ -73,6 +103,10 @@ def vignette_html(s, prefixe, cls, lazy=True, icone=True):
     return (f'<span class="{cls}" aria-hidden="true"><img src="{prefixe}{rel}" width="640" height="480" alt=""{charge} decoding="async">{ico}</span>')
 
 def bloc_video(s):
+    if a_venir(s):
+        return ('<div class="video-absente video-a-venir">'
+                f'<p>{escape(ligne_quand(s))}</p>'
+                f'<p class="seance-meta">{note_direct()}.</p></div>')
     v = video_ok(s)
     if not v:
         return ('<div class="video-absente"><p>Pas de vidéo publiée pour cette séance.</p>'
@@ -104,6 +138,8 @@ def documents(s):
 
 def resume(s):
     """Indications courtes : « Vidéo · Ordre du jour · Procès-verbal en attente »."""
+    if a_venir(s):
+        return ' · '.join(['À venir'] + [TYPES[d['type']] for d in documents(s)])
     r = ['Vidéo'] if video_ok(s) else []
     r += [TYPES[d['type']] for d in documents(s)]
     if s.get('pv_en_attente') and not any(d['type'] == 'proces-verbal' for d in documents(s)):
@@ -161,7 +197,7 @@ def page_seance(s, prec, suiv, gab):
     <article class="seance seance--page{'' if video_ok(s) else ' seance--sans-video'}">
       <div class="seance-blocs">
         <div class="seance-bloc seance-bloc--video">
-          <h2 class="seance-label">Vidéo de la séance</h2>
+          <h2 class="seance-label">{'Séance à venir' if a_venir(s) else 'Vidéo de la séance'}</h2>
           {video}
         </div>
         <div class="seance-bloc">
@@ -203,7 +239,17 @@ def index_html(seances):
     if annee: blocs.append('    </ol>')
     return '\n'.join(blocs)
 
-def accueil_html(s):
+def accueil_html(seances):
+    s = seances[0]
+    if a_venir(s):
+        passe = next((x for x in seances[1:] if not a_venir(x)), None)
+        lien_passe = (f'        <p class="teaser-conseil-passe"><a href="conseils/{passe["date"]}.html">'
+                      f'Dernière séance : {escape(nom_seance(passe))}</a></p>\n') if passe else ''
+        return (f'        <p class="teaser-conseil-label">Prochaine séance</p>\n'
+                f'        <p class="teaser-conseil-titre"><a href="conseils/{s["date"]}.html">{escape(nom_seance(s))}</a></p>\n'
+                f'        <p class="teaser-conseil-quand">{escape(ligne_quand(s))}</p>\n'
+                f'        <p class="teaser-conseil-note">{note_direct()}.</p>\n'
+                f'{lien_passe}')
     return (f'        <a class="teaser-conseil-video" href="conseils/{s["date"]}.html" tabindex="-1" aria-hidden="true">'
             f'{vignette_html(s, "", "teaser-conseil-vignette")}</a>\n'
             f'        <p class="teaser-conseil-label">Dernière séance</p>\n'
@@ -236,7 +282,7 @@ def main():
         if os.path.basename(f)[:-4] not in ids:
             os.remove(f); print(f'  - {os.path.relpath(f, SITE)} supprimée')
     remplacer('conseils-municipaux.html', 'SEANCES', index_html(seances))
-    if seances: remplacer('index.html', 'ACCUEIL-SEANCES', accueil_html(seances[0]))
+    if seances: remplacer('index.html', 'ACCUEIL-SEANCES', accueil_html(seances))
     ecrire('sitemap.xml', sitemap(seances))
     print(f"{len(seances)} séances générées.")
 

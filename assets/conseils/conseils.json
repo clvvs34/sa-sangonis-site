@@ -2,6 +2,20 @@
   "_aide": "Source de conseils-municipaux.html et de l'encart d'accueil. Après modification : python3 scripts/build-conseils.py. Documents publiés : UNIQUEMENT ordres du jour et procès-verbaux APPROUVÉS, en PDF dans assets/conseils/AAAA-MM-JJ-ordre-du-jour.pdf ou AAAA-MM-JJ-proces-verbal.pdf, déclarés dans 'documents' (type ordre-du-jour ou proces-verbal). 'pv_en_attente': true affiche « Procès-verbal : en attente d’approbation ». Les vidéos sont ajoutées automatiquement par scripts/sync-videos.py (lives de la chaîne YouTube de la Ville).",
   "seances": [
     {
+      "date": "2026-11-05",
+      "titre": "Conseil municipal",
+      "heure": "18:30",
+      "lieu": "Salle du conseil municipal, Cours de la Place",
+      "video": null,
+      "documents": [
+        {
+          "type": "ordre-du-jour",
+          "titre": "Ordre du jour",
+          "fichier": "assets/conseils/2026-11-05-ordre-du-jour.pdf"
+        }
+      ]
+    },
+    {
       "date": "2026-09-24",
       "titre": "Conseil municipal",
       "video": {
@@ -15,7 +29,8 @@
           "titre": "Ordre du jour",
           "fichier": "assets/conseils/2026-09-24-ordre-du-jour.pdf"
         }
-      ]
+      ],
+      "pv_en_attente": true
     },
     {
       "date": "2026-06-18",
