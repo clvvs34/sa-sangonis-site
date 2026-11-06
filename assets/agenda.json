@@ -223,6 +223,19 @@
    }
   },
   {
+   "titre": "Pour un café solidaire : soirée de soutien",
+   "debut": "2026-11-28 19:00:00",
+   "fin": "2026-11-28 21:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/pour-un-cafe-solidaire-soiree-de-soutien/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/affiche-cafe-solidaire-200x300.jpg",
+    "largeur": 200,
+    "hauteur": 300
+   }
+  },
+  {
    "titre": "Loto de la Boule Dorée Joyeuse",
    "debut": "2026-11-29 17:00:00",
    "fin": "2026-11-29 20:30:00",
