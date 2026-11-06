@@ -80,6 +80,19 @@
    }
   },
   {
+   "titre": "CCVH 2040 : Demain s’écrit ici",
+   "debut": "2026-11-10 19:00:00",
+   "fin": "2026-11-10 20:30:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/ccvh-2040-demain-secrit-ici/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/Repit-Parental-CCVH-2040-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
+  },
+  {
    "titre": "Commémoration du 11 novembre",
    "debut": "2026-11-11 10:15:00",
    "fin": "2026-11-11 12:30:00",
@@ -88,6 +101,19 @@
    "url": "https://saintandredesangonis.fr/event/commemoration-du-11-novembre/",
    "image": {
     "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/2026-AFFICHES-A4-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
+  },
+  {
+   "titre": "Atelier du vendredi soir",
+   "debut": "2026-11-13 16:45:00",
+   "fin": "2026-11-13 18:00:00",
+   "journee": false,
+   "lieu": "EMS, 20 cours de la Liberté",
+   "url": "https://saintandredesangonis.fr/event/atelier-du-vendredi-soir-25/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/Atelier-du-vendredi-soir-Novembre-2026-1-212x300.jpg",
     "largeur": 212,
     "hauteur": 300
    }
@@ -153,6 +179,32 @@
    "url": "https://saintandredesangonis.fr/event/sortie-a-la-jonquera/",
    "image": {
     "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/Sortie-a-la-Jonquera-212x300.png",
+    "largeur": 212,
+    "hauteur": 300
+   }
+  },
+  {
+   "titre": "Initiation au pilates avec Loriane BRUNO de l’Association Pep’s et Forme",
+   "debut": "2026-11-18 10:00:00",
+   "fin": "2026-11-18 11:30:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/initiation-au-pilates-avec-loriane-bruno-de-lassociation-peps-et-forme/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/Repit-Parental-Pilates-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
+  },
+  {
+   "titre": "Conférence : des solutions face aux écrans",
+   "debut": "2026-11-20 20:30:00",
+   "fin": "2026-11-20 21:30:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/conference-des-solutions-face-aux-ecrans/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/affiche-20-nov-2026-212x300.jpg",
     "largeur": 212,
     "hauteur": 300
    }
