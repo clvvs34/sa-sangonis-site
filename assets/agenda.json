@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Rencontre du groupe « lecture »",
-   "debut": "2026-11-06 18:00:00",
-   "fin": "2026-11-06 19:30:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/rencontre-du-groupe-lecture-3/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/01/Image2-1.jpg",
-    "largeur": 193,
-    "hauteur": 129
-   }
-  },
-  {
    "titre": "Soirée Karaoké",
    "debut": "2026-11-06 20:30:00",
    "fin": "2026-11-06 23:30:00",
