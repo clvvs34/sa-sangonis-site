@@ -6,7 +6,11 @@
       "titre": "Conseil municipal",
       "heure": "18:30",
       "lieu": "Salle du conseil municipal, Cours de la Place",
-      "video": null,
+      "video": {
+        "id": "dx1Wx_48XIY",
+        "titre": "Conseil municipal du 5 novembre",
+        "duree": "1 h 58"
+      },
       "documents": [
         {
           "type": "ordre-du-jour",
