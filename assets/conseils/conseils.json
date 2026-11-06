@@ -49,9 +49,13 @@
           "type": "ordre-du-jour",
           "titre": "Ordre du jour",
           "fichier": "assets/conseils/2026-06-18-ordre-du-jour.pdf"
+        },
+        {
+          "type": "proces-verbal",
+          "titre": "Procès-verbal",
+          "fichier": "assets/conseils/2026-06-18-proces-verbal.pdf"
         }
-      ],
-      "pv_en_attente": true
+      ]
     },
     {
       "date": "2026-06-05",
@@ -79,9 +83,13 @@
           "type": "ordre-du-jour",
           "titre": "Ordre du jour",
           "fichier": "assets/conseils/2026-04-29-ordre-du-jour.pdf"
+        },
+        {
+          "type": "proces-verbal",
+          "titre": "Procès-verbal",
+          "fichier": "assets/conseils/2026-04-29-proces-verbal.pdf"
         }
-      ],
-      "pv_en_attente": true
+      ]
     },
     {
       "date": "2026-04-08",
