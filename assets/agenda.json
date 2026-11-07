@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Concours de Belote",
-   "debut": "2026-11-07 14:00:00",
-   "fin": "2026-11-07 17:00:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/concours-de-belote-10/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/BELOTE-2026-2027-212x300.png",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Soirée impro avec la troupe VIP – Very Impro People",
    "debut": "2026-11-07 20:00:00",
    "fin": "2026-11-07 22:00:00",
