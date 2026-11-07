@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Soirée Karaoké",
-   "debut": "2026-11-06 20:30:00",
-   "fin": "2026-11-06 23:30:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/soiree-karaoke/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/Affiche-karaoke-pour-impression-212x300.png",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Concours de Belote",
    "debut": "2026-11-07 14:00:00",
    "fin": "2026-11-07 17:00:00",
