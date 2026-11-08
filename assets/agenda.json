@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Soirée impro avec la troupe VIP – Very Impro People",
-   "debut": "2026-11-07 20:00:00",
-   "fin": "2026-11-07 22:00:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/soiree-theatre-dimpro-avec-la-sauce/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/afficheVIP4-212x300.png",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Loto de la société des chasseurs et propriétaires",
    "debut": "2026-11-08 17:00:00",
    "fin": "2026-11-08 20:30:00",
