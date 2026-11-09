@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Loto de la société des chasseurs et propriétaires",
-   "debut": "2026-11-08 17:00:00",
-   "fin": "2026-11-08 20:30:00",
-   "journee": false,
-   "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
-   "url": "https://saintandredesangonis.fr/event/loto-de-la-societe-des-chasseurs-et-proprietaires-2/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2025/08/IMAGES-PORTRAIT-1-1-200x300.jpg",
-    "largeur": 200,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Don de sang",
    "debut": "2026-11-09 14:30:00",
    "fin": "2026-11-09 19:00:00",
