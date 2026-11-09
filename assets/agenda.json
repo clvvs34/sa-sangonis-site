@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Don de sang",
-   "debut": "2026-11-09 14:30:00",
-   "fin": "2026-11-09 19:00:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/don-de-sang-12/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/Capture-decran-2026-10-19-140129-210x300.png",
-    "largeur": 210,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "CCVH 2040 : Demain s’écrit ici",
    "debut": "2026-11-10 19:00:00",
    "fin": "2026-11-10 20:30:00",
