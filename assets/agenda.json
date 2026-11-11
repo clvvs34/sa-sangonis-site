@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Commémoration du 11 novembre",
-   "debut": "2026-11-11 10:15:00",
-   "fin": "2026-11-11 12:30:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/commemoration-du-11-novembre/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/2026-AFFICHES-A4-212x300.jpg",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Atelier du vendredi soir",
    "debut": "2026-11-13 16:45:00",
    "fin": "2026-11-13 18:00:00",
