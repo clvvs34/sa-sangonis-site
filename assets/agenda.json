@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "CCVH 2040 : Demain s’écrit ici",
-   "debut": "2026-11-10 19:00:00",
-   "fin": "2026-11-10 20:30:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/ccvh-2040-demain-secrit-ici/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/Repit-Parental-CCVH-2040-212x300.jpg",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Commémoration du 11 novembre",
    "debut": "2026-11-11 10:15:00",
    "fin": "2026-11-11 12:30:00",
