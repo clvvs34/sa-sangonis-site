@@ -2,32 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Atelier du vendredi soir",
-   "debut": "2026-11-13 16:45:00",
-   "fin": "2026-11-13 18:00:00",
-   "journee": false,
-   "lieu": "EMS, 20 cours de la Liberté",
-   "url": "https://saintandredesangonis.fr/event/atelier-du-vendredi-soir-25/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/Atelier-du-vendredi-soir-Novembre-2026-1-212x300.jpg",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
-   "titre": "Projection du documentaire de Vincent Verzat « le vivant qui se défend » en partenariat avec l’ASAVH",
-   "debut": "2026-11-13 18:30:00",
-   "fin": "2026-11-13 20:00:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/projection-du-documentaire-de-vincent-verzat-le-vivant-qui-se-defend-en-partenariat-avec-lasavh/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/IMAGES-4-3-300x200.jpg",
-    "largeur": 300,
-    "hauteur": 200
-   }
-  },
-  {
    "titre": "Bourse aux jouets",
    "debut": "2026-11-14 09:00:00",
    "fin": "2026-11-14 17:00:00",
