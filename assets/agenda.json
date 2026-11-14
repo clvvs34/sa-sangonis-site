@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Bourse aux jouets",
-   "debut": "2026-11-14 09:00:00",
-   "fin": "2026-11-14 17:00:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/bourse-aux-jouets-4/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/Bourse-aux-jouets-2026-212x300.png",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Gravember 2026",
    "debut": "2026-11-15 08:00:00",
    "fin": "2026-11-15 17:00:00",
