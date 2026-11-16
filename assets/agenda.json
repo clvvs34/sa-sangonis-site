@@ -132,6 +132,19 @@
    }
   },
   {
+   "titre": "Fête foraine",
+   "debut": "2026-12-05 00:00:00",
+   "fin": "2026-12-13 23:59:59",
+   "journee": true,
+   "lieu": "Gymnase Raymond Boisset",
+   "url": "https://saintandredesangonis.fr/event/fete-foraine-4/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/2026-AFFICHES-A4-1-212x300.jpg",
+    "largeur": 212,
+    "hauteur": 300
+   }
+  },
+  {
    "titre": "Repas de la fête",
    "debut": "2026-12-05 19:00:00",
    "fin": "2026-12-06 02:00:00",
