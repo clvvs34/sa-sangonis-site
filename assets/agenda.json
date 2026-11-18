@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Sortie à la Jonquera",
-   "debut": "2026-11-18 08:30:00",
-   "fin": "2026-11-18 17:00:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/sortie-a-la-jonquera/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/Sortie-a-la-Jonquera-212x300.png",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Conférence : des solutions face aux écrans",
    "debut": "2026-11-20 20:30:00",
    "fin": "2026-11-20 21:30:00",
@@ -50,6 +37,19 @@
    "image": {
     "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/2026-AFFICHES-A4-2-212x300.jpg",
     "largeur": 212,
+    "hauteur": 300
+   }
+  },
+  {
+   "titre": "Football",
+   "debut": "2026-11-21 19:00:00",
+   "fin": "2026-11-21 20:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/football-2/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/1-240x300.png",
+    "largeur": 240,
     "hauteur": 300
    }
   },
@@ -119,6 +119,19 @@
    }
   },
   {
+   "titre": "Festa Créa",
+   "debut": "2026-12-01 13:30:00",
+   "fin": "2026-12-01 16:00:00",
+   "journee": false,
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/festa-crea/",
+   "image": {
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/Capture-decran-2026-11-10-090410-211x300.jpg",
+    "largeur": 211,
+    "hauteur": 300
+   }
+  },
+  {
    "titre": "Fête foraine",
    "debut": "2026-12-05 00:00:00",
    "fin": "2026-12-13 23:59:59",
@@ -139,21 +152,21 @@
    "lieu": null,
    "url": "https://saintandredesangonis.fr/event/repas-de-la-fete/",
    "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/2026-PANNEAUX-LEDS-4-232x300.png",
-    "largeur": 232,
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/10/Repas-200x300.png",
+    "largeur": 200,
     "hauteur": 300
    }
   },
   {
-   "titre": "Loto de Los Porcs Nègres",
+   "titre": "Loto",
    "debut": "2026-12-06 17:00:00",
-   "fin": "2026-12-06 20:30:00",
+   "fin": "2026-12-06 20:00:00",
    "journee": false,
-   "lieu": "Salle des fêtes – Saint-André-de-Sangonis",
-   "url": "https://saintandredesangonis.fr/event/loto-de-los-porcs-negres-6/",
+   "lieu": null,
+   "url": "https://saintandredesangonis.fr/event/31660/",
    "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2025/08/IMAGES-PORTRAIT-1-1-200x300.jpg",
-    "largeur": 200,
+    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/Loto-porcs-negres-1-207x300.png",
+    "largeur": 207,
     "hauteur": 300
    }
   },
