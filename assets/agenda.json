@@ -2,19 +2,6 @@
  "source": "https://saintandredesangonis.fr/agenda/",
  "evenements": [
   {
-   "titre": "Conférence : des solutions face aux écrans",
-   "debut": "2026-11-20 20:30:00",
-   "fin": "2026-11-20 21:30:00",
-   "journee": false,
-   "lieu": null,
-   "url": "https://saintandredesangonis.fr/event/conference-des-solutions-face-aux-ecrans/",
-   "image": {
-    "url": "https://saintandredesangonis.fr/wp-content/uploads/2026/11/affiche-20-nov-2026-212x300.jpg",
-    "largeur": 212,
-    "hauteur": 300
-   }
-  },
-  {
    "titre": "Faut qu’on parle – Et si vous rencontriez quelqu’un qui ne pense pas comme vous ?",
    "debut": "2026-11-21 10:00:00",
    "fin": "2026-11-21 15:00:00",
